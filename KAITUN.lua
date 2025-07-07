@@ -277,7 +277,7 @@ local function main()
                 )
             elseif Have and not CheckBackPack then
                 ReturnForLobby()
-            elseif Have or tonumber(SeedHave) < 10000 then
+            elseif Have or tonumber(SeedHave) < 5000 then
                 local args = {
                     "unique_1",
                     true
