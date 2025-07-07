@@ -260,7 +260,7 @@ local function main()
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-            if (not Have and tonumber(SeedHave) > 10000) then
+            if (not Have and tonumber(SeedHave) > 5000) then
                 local args = {
                     "ub_classic_v8",
                     10
@@ -311,7 +311,7 @@ local function main()
             if(tonumber(Wins.Text) >= 25 and workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0)) or (workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0) and tonumber(Wins.Text) < 25 and tonumber(Seed) < 10000 and (not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Laser Plant") or not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") or not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Farmer"))) then
                 PlayLose()
             elseif tonumber(Wins.Text) < 25 and tonumber(Seed) >= 10000 and not CheckBackPack then
-                game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+                game:shutdown()
             elseif workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack and (tonumber(Wins.Text) < 25) then
                 print('PlayWin')
                 PlayWin()
