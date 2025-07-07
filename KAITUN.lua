@@ -308,7 +308,7 @@ local function main()
             Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
             local Seed = SeedValue:find("[Kk]") and SeedValue:gsub("[Kk]", "") * 1000 or SeedValue:gsub(",", "")
-            if tonumber(Wins.Text) >=25 then
+            if tonumber(Wins.Text) >= 25 then
                 if workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack then
                     PlayLose()
                 end
