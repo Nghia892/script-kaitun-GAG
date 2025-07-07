@@ -308,7 +308,7 @@ local function main()
             Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
             local Seed = SeedValue:find("[Kk]") and SeedValue:gsub("[Kk]", "") * 1000 or SeedValue:gsub(",", "")
-            if(tonumber(Wins.Text) >= 25 and workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0)) or (workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0) and tonumber(Wins.Text) < 25 and tonumber(Seed) < 10000 and (not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Laser Plant") or not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") or not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Farmer"))) then
+            if(tonumber(Wins.Text) >= 25 and workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0)) or (workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0) and tonumber(Wins.Text) < 25 and tonumber(Seed) < 14999 and (not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Laser Plant") or not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") or not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Farmer"))) then
                 PlayLose()
             elseif tonumber(Wins.Text) < 25 and tonumber(Seed) >= 15000 and not CheckBackPack then
                 game:shutdown()
