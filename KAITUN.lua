@@ -312,7 +312,7 @@ local function main()
                 PlayLose()
             elseif tonumber(Wins.Text) < 25 and tonumber(Seed) >= 15000 and not CheckBackPack then
                 game:shutdown()
-            elseif workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack and (tonumber(Wins.Text) < 25) then
+            elseif workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack and tonumber(Wins.Text) < 25 then
                 print('PlayWin')
                 PlayWin()
             elseif workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and (tonumber(Wins.Text) > 25) then
