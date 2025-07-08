@@ -323,6 +323,8 @@ local function main()
                     game:shutdown()
                 elseif workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and (tonumber(Wins.Text) >= 25) then
                     game:shutdown()
+                else
+                    print('BUG')
                 end
             end
             task.wait()
