@@ -1,10 +1,9 @@
-local Wins =
-    game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local _wait = task.wait
 repeat
     _wait()
 until game:IsLoaded()
 task.wait(5)
+local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
     while true do
