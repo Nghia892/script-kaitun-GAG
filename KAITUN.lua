@@ -3,7 +3,6 @@ repeat
     _wait()
 until game:IsLoaded()
 task.wait(5)
-local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
     while true do
@@ -221,6 +220,7 @@ local function CheckBackPack()
         return false
     end
 end
+local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 task.spawn(function()
     local Players = game:GetService("Players")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
