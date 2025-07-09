@@ -220,9 +220,6 @@ local function CheckBackPack()
         return false
     end
 end
-if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame:FindFirstChild("GamesWon") then
-    local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
-end
 task.spawn(function()
     local Players = game:GetService("Players")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -252,6 +249,9 @@ task.spawn(function()
         task.wait(1)
     end
 end)
+
+
+local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
         while true do
