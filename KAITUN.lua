@@ -2,6 +2,9 @@ local _wait = task.wait
 repeat
     _wait()
 until game:IsLoaded()
+repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
+repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.ClientDataHandler
+repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.SharedItemData
 task.wait(5)
 local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
