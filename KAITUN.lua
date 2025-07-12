@@ -254,7 +254,75 @@ task.spawn(function()
         task.wait(1)
     end
 end)
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local PlaceId = game.PlaceId
+local JobId = game.JobId
+local ApiURL = "https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=20"
+local function hopServer()
+    local function GetServers(cursor)
+        local url = ApiURL
+        if cursor then
+            url = url .. "&cursor=" .. cursor
+        end
+        local success, response = pcall(function()
+            return game:HttpGet(url)
+        end)
+        if success then
+            return HttpService:JSONDecode(response)
+        else
+            warn("Lỗi khi tải server:", response)
+            return nil
+        end
+    end
 
+    local potentialServers = {}
+    local cursor = nil
+
+    repeat
+        local data = GetServers(cursor)
+        if data and data.data then
+            for _, server in ipairs(data.data) do
+                if server.playing < (server.maxPlayers - 3) and server.id ~= JobId then
+                    table.insert(potentialServers, server)
+                end
+            end
+            cursor = data.nextPageCursor
+        else
+            break
+        end
+    until not cursor
+
+    if #potentialServers > 0 then
+        local randomIndex = math.random(1, #potentialServers)
+        local targetServer = potentialServers[randomIndex]
+
+        local success, err = pcall(function()
+            TeleportService:TeleportToPlaceInstance(PlaceId, targetServer.id, LocalPlayer)
+        end)
+        if not success then
+            warn("Lỗi teleport:", err)
+        end
+    else
+        warn("Không tìm thấy server dưới 3 người.")
+    end
+end
+
+local function isAnyPlayerNearby(maxDistance, cframe)
+    local targetCFrame = cframe
+    for _, player in pairs(game.Players:GetPlayers()) do
+        local character = player.Character
+        if character and character.PrimaryPart then
+            local distance = (character.PrimaryPart.Position - targetCFrame.Position).Magnitude
+            if distance <= maxDistance then
+                return false -- Có người chơi gần đó
+            end
+        end
+    end
+    return true -- Không có người chơi nào gần đó
+end
 
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
@@ -264,6 +332,7 @@ local function main()
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+            local maxDistance = 7 -- Khoảng cách tối đa (studs)
             if (not Have and tonumber(SeedHave) > 5000) then
                 local args = {
                     "ub_classic_v8",
@@ -290,14 +359,22 @@ local function main()
                     unpack(args)
                 )
                 if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                        CFrame.new(85.2458649, 70.9051361, 808.613525
-                    )
-                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
+                    if isAnyPlayerNearby(maxDistance, CFrame.new(85.2458649, 70.9051361, 808.613525)) then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                            CFrame.new(85.2458649, 70.9051361, 808.613525
+                        )
+                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
+                    else
+                        hopServer()
+                    end
                 else
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                        CFrame.new(139.886551, 70.6783218, 815.733337)
-                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
+                    if isAnyPlayerNearby(maxDistance, CFrame.new(139.886551, 70.6783218, 815.733337)) then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+                            CFrame.new(139.886551, 70.6783218, 815.733337)
+                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
+                    else
+                        hopServer()
+                    end
                 end
                 task.wait(2)
             end
