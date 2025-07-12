@@ -325,11 +325,13 @@ end)
 local function isAnyPlayerNearby(maxDistance, cframe)
     local targetCFrame = cframe
     for _, player in pairs(game.Players:GetPlayers()) do
-        local character = player.Character
-        if character and character.PrimaryPart then
-            local distance = (character.PrimaryPart.Position - targetCFrame.Position).Magnitude
-            if distance <= maxDistance then
-                return false -- Có người chơi gần đó
+        if player ~= game.Players.LocalPlayer then
+            local character = player.Character
+            if character and character.PrimaryPart then
+                local distance = (character.PrimaryPart.Position - targetCFrame.Position).Magnitude
+                if distance <= maxDistance then
+                    return false -- Có người chơi gần đó
+                end
             end
         end
     end
