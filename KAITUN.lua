@@ -395,7 +395,7 @@ local function main()
                 game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(
                     unpack(args)
                 )
-                ReturnForLobby()
+                RemoveUnit()
             elseif Have and not CheckBackPack() then
                 ReturnForLobby()
             elseif Have or tonumber(SeedHave) < 5000 then
