@@ -8,6 +8,7 @@ repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Sc
 repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.ClientDataHandler
 repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.SharedItemData
 task.wait(5)
+local Players = game:GetService("Players")
 local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
     while true do
@@ -215,51 +216,22 @@ local PlaceId = game.PlaceId
 local JobId = game.JobId
 local ApiURL = "https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=20"
 local function hopServer()
-    local function GetServers(cursor)
-        local url = ApiURL
-        if cursor then
-            url = url .. "&cursor=" .. cursor
-        end
-        local success, response = pcall(function()
-            return game:HttpGet(url)
-        end)
-        if success then
-            return HttpService:JSONDecode(response)
-        else
-            warn("Lỗi khi tải server:", response)
-            return nil
+    local servers = {}
+    local req = game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true")
+    local body = HttpService:JSONDecode(req)
+
+    if body and body.data then
+        for i, v in next, body.data do
+            if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+                table.insert(servers, 1, v.id)
+            end
         end
     end
 
-    local potentialServers = {}
-    local cursor = nil
-
-    repeat
-        local data = GetServers(cursor)
-        if data and data.data then
-            for _, server in ipairs(data.data) do
-                if server.playing < (server.maxPlayers - 3) and server.id ~= JobId then
-                    table.insert(potentialServers, server)
-                end
-            end
-            cursor = data.nextPageCursor
-        else
-            break
-        end
-    until not cursor
-
-    if #potentialServers > 0 then
-        local randomIndex = math.random(1, #potentialServers)
-        local targetServer = potentialServers[randomIndex]
-
-        local success, err = pcall(function()
-            TeleportService:TeleportToPlaceInstance(PlaceId, targetServer.id, LocalPlayer)
-        end)
-        if not success then
-            warn("Lỗi teleport:", err)
-        end
+    if #servers > 0 then
+        TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
     else
-        warn("Không tìm thấy server dưới 3 người.")
+        return notify("Serverhop", "Couldn't find a server.")
     end
 end
 local function AntiAfk2()
