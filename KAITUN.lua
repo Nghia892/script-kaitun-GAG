@@ -282,7 +282,7 @@ task.spawn(function()
             if (not Have and tonumber(SeedHave) > 5000) then
                 print('Nothinh')
             else
-                task.wait(60)
+                task.wait(100)
                 hopServer()
             end
         else
