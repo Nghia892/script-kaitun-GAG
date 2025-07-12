@@ -297,6 +297,7 @@ local function main()
                 else
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
                         CFrame.new(139.886551, 70.6783218, 815.733337)
+                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
                 end
                 task.wait(2)
             end
