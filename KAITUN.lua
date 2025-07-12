@@ -285,7 +285,10 @@ task.spawn(function()
                 task.wait(60)
                 hopServer()
             end
+        else
+            break
         end
+        task.wait(1)
     end
 end)
 task.spawn(function()
@@ -338,7 +341,7 @@ local function main()
     if game.PlaceId == 108533757090220 then
         LowCpu()
         while true do
-            setfpscap(15)
+            -- setfpscap(15)
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
@@ -395,7 +398,7 @@ local function main()
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(10)
+        -- setfpscap(10)
         while true do
             Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
