@@ -207,53 +207,6 @@ local function AntiLag()
         end
     )
 end
-local function AntiAfk2()
-    task.spawn(
-        function()
-            while true do
-                VirtualUser:CaptureController()
-                VirtualUser:ClickButton2(Vector2.new())
-                task.wait(5)
-            end
-        end
-    )
-end
-local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Laser Plant") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Farmer") then
-        return true
-    else
-        return false
-    end
-end
-task.spawn(function()
-    local Players = game:GetService("Players")
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local lastSeedValue, timeSinceLastChange = nil, 0
-    while true do
-        local Seeds = tostring(Players.LocalPlayer.leaderstats.Seeds:FindFirstChild("Value39")) or game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
-        local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-        SeedHave = tonumber(SeedHave)
-
-        if lastSeedValue and SeedHave ~= lastSeedValue then
-            timeSinceLastChange = 0
-            lastSeedValue = SeedHave
-        elseif lastSeedValue then
-            timeSinceLastChange = timeSinceLastChange + 1
-            if timeSinceLastChange >= 180 then
-                print("No change in SeedHave for 3 minutes: " .. SeedHave)
-                if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
-                    ReplicatedStorage.RemoteFunctions.BackToMainLobby:InvokeServer()
-                else
-                    game:shutdown()
-                end
-                timeSinceLastChange = 0
-            end
-        else
-            lastSeedValue = SeedHave
-        end
-        task.wait(1)
-    end
-end)
 local TextChatService = game:GetService("TextChatService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
@@ -309,6 +262,69 @@ local function hopServer()
         warn("Không tìm thấy server dưới 3 người.")
     end
 end
+local function AntiAfk2()
+    task.spawn(
+        function()
+            while true do
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
+                task.wait(5)
+            end
+        end
+    )
+end
+local function CheckBackPack()
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Laser Plant") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Farmer") then
+        return true
+    else
+        return false
+    end
+end
+task.spanw(function()
+    while true do
+        if game.PlaceId == 108533757090220 then
+            local Have = CheckHave()
+            local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
+            local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+            if (not Have and tonumber(SeedHave) > 5000) then
+                print('Nothinh')
+            else
+                task.wait(60)
+                hopServer()
+            end
+        end
+    end
+end)
+task.spawn(function()
+    local Players = game:GetService("Players")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local lastSeedValue, timeSinceLastChange = nil, 0
+    while true do
+        local Seeds = tostring(Players.LocalPlayer.leaderstats.Seeds:FindFirstChild("Value39")) or game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
+        local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+        SeedHave = tonumber(SeedHave)
+
+        if lastSeedValue and SeedHave ~= lastSeedValue then
+            timeSinceLastChange = 0
+            lastSeedValue = SeedHave
+        elseif lastSeedValue then
+            timeSinceLastChange = timeSinceLastChange + 1
+            if timeSinceLastChange >= 180 then
+                print("No change in SeedHave for 3 minutes: " .. SeedHave)
+                if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
+                    ReplicatedStorage.RemoteFunctions.BackToMainLobby:InvokeServer()
+                else
+                    game:shutdown()
+                end
+                timeSinceLastChange = 0
+            end
+        else
+            lastSeedValue = SeedHave
+        end
+        task.wait(1)
+    end
+end)
+
 
 local function isAnyPlayerNearby(maxDistance, cframe)
     local targetCFrame = cframe
@@ -437,3 +453,5 @@ end
 
 -- Chạy script
 runScript()
+
+game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.SharedHelper:FireRemoteEvent("CashFloat")
