@@ -39,6 +39,37 @@ local function CheckHave()
         return false
     end
 end
+
+local function RemoveUnit()
+    local ClientDataHandler = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.ClientDataHandler)
+	local inventory = ClientDataHandler.GetValue("Inventory")
+	local toDelete = {}
+	local kept = {}
+
+	for uniqueId, unitData in pairs(inventory or {}) do
+		local itemId = unitData.ItemData and unitData.ItemData.ID
+		local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
+
+		if rarity.Rarity == "ra_godly" or unitData.Equipped == true then
+			kept[itemId] = true
+			continue
+		end
+		if not kept[itemId] then
+			kept[itemId] = true
+		else
+			table.insert(toDelete, uniqueId)
+		end
+	end
+	if #toDelete > 0 then
+		print("🗑️ Deleting", #toDelete, "units...")
+		pcall(function()
+			deleteRemote:InvokeServer(toDelete)
+		end)
+	else
+		print("✅ Không có unit nào cần xoá.")
+	end
+end
+
 local function ReturnForLobby()
     local ClientDataHandler = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.ClientDataHandler)
     local inventory = ClientDataHandler.GetValue("Inventory")
