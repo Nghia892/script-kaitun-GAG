@@ -208,6 +208,28 @@ local function AntiLag()
         end
     )
 end
+local function LowCpu()
+    for _, v in pairs(workspace.Map:GetChildren()) do
+        if v.Name ~= "LobbiesFarm" and v.Name ~= "LobbiesJungle" and v.Name ~= "Model" then
+            v:Destroy()
+        end
+    end
+    if workspace.Map:FindFirstChild("Model") then
+        for _, v in pairs(workspace.Map.Model:GetChildren()) do
+            if v.Name ~= "Floor" then
+                v:Destroy()
+            end
+        end
+    else
+        warn("Model not found in workspace.Map")
+    end
+    for _, v in pairs(workspace:GetChildren()) do
+        if v.Name ~= game.Players.LocalPlayer.Name and v:IsA("Model") then
+            v:Destroy()
+        end
+    end
+end
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local TeleportService = game:GetService("TeleportService")
@@ -314,6 +336,7 @@ end
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
+        LowCpu()
         while true do
             setfpscap(15)
             local Have = CheckHave()
@@ -424,5 +447,3 @@ end
 
 -- Chạy script
 runScript()
-
-game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.SharedHelper:FireRemoteEvent("CashFloat")
