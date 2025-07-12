@@ -251,7 +251,7 @@ local function CheckBackPack()
         return false
     end
 end
-task.spanw(function()
+task.spawn(function()
     while true do
         if game.PlaceId == 108533757090220 then
             local Have = CheckHave()
