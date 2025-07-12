@@ -92,8 +92,8 @@ local function PlayLose()
             {
                 Valid = true,
                 Rotation = 180,
-                CF = CFrame.new(-335.3413391113281, 62.845054626464844, -124.63864135742188),
-                Position = vector.create(-335.3413391113281, 62.845054626464844, -124.63864135742188)
+                CF = CFrame.new(-42.448734283447266, -29.522750854492188, 84.18336486816406),
+                Position = vector.create(-42.448734283447266, -29.522750854492188, 84.18336486816406)
             }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
@@ -210,7 +210,7 @@ local function AntiLag()
 end
 local function LowCpu()
     for _, v in pairs(workspace.Map:GetChildren()) do
-        if v.Name ~= "LobbiesFarm" and v.Name ~= "LobbiesJungle" and v.Name ~= "Model" then
+        if v.Name ~= "LobbiesFarm" and v.Name ~= "LobbiesIsland" and v.Name ~= "Model" then
             v:Destroy()
         end
     end
@@ -341,7 +341,7 @@ local function main()
     if game.PlaceId == 108533757090220 then
         LowCpu()
         while true do
-            -- setfpscap(15)
+            setfpscap(15)
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
@@ -372,18 +372,23 @@ local function main()
                     unpack(args)
                 )
                 if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
-                    if isAnyPlayerNearby(maxDistance, CFrame.new(85.2458649, 70.9051361, 808.613525)) then
+                    if isAnyPlayerNearby(maxDistance, CFrame.new(-524.310425, 66.6783218, 798.722839)) then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                            CFrame.new(85.2458649, 70.9051361, 808.613525
+                            CFrame.new(-524.310425, 66.6783218, 798.722839
                         )
+                        local args = {
+	                        "map_farm"
+                        }
+                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMap_6"):InvokeServer(unpack(args))
+
                         -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
                     else
                         hopServer()
                     end
                 else
-                    if isAnyPlayerNearby(maxDistance, CFrame.new(139.886551, 70.6783218, 815.733337)) then
+                    if isAnyPlayerNearby(maxDistance, CFrame.new(-470.396271, 66.6783218, 804.201233)) then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                            CFrame.new(139.886551, 70.6783218, 815.733337)
+                            CFrame.new(-470.396271, 66.6783218, 804.201233)
                         -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
                     else
                         hopServer()
@@ -398,7 +403,7 @@ local function main()
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        -- setfpscap(10)
+        setfpscap(10)
         while true do
             Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
@@ -445,6 +450,7 @@ local function runScript()
             errorCount = 0 -- Reset error count on success
             break
         end
+        task.wait()
     end
 end
 
