@@ -363,7 +363,7 @@ local function main()
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
                             CFrame.new(85.2458649, 70.9051361, 808.613525
                         )
-                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
+                        -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
                     else
                         hopServer()
                     end
@@ -371,7 +371,7 @@ local function main()
                     if isAnyPlayerNearby(maxDistance, CFrame.new(139.886551, 70.6783218, 815.733337)) then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
                             CFrame.new(139.886551, 70.6783218, 815.733337)
-                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
+                        -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
                     else
                         hopServer()
                     end
