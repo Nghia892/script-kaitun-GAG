@@ -343,7 +343,8 @@ local function main()
     if game.PlaceId == 108533757090220 then
         LowCpu()
         while true do
-            setfpscap(15)
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
+            setfpscap(10)
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
