@@ -411,7 +411,7 @@ local function main()
             if tonumber(Wins.Text) >= 25 then
                 if workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) then
                     game:shutdown()
-                elseif workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -272.472839, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() then
+                elseif workspace.Map.BaseHP.CFrame == CFrame.new(-143.476471, -25.6971436, 214.589005, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() then
                     PlayLose()
                 end
             else
