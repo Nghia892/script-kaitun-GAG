@@ -41,6 +41,8 @@ local function CheckHave()
 end
 
 local function RemoveUnit()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local deleteRemote = ReplicatedStorage:WaitForChild("RemoteFunctions"):WaitForChild("DeleteUnit")
     local ClientDataHandler = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.ClientDataHandler)
 	local inventory = ClientDataHandler.GetValue("Inventory")
 	local toDelete = {}
@@ -382,12 +384,10 @@ local function main()
             local maxDistance = 7 -- Khoảng cách tối đa (studs)
             if (not Have and tonumber(SeedHave) > 5000) then
                 local args = {
-                    "ub_classic_v8",
-                    10
+	                "ub_jungle",
+	                10
                 }
-                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(
-                    unpack(args)
-                )
+                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
                 local args = {
                     "ub_classic_v4",
                     10
