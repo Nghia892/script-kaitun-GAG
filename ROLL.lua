@@ -1,5 +1,5 @@
 local SeedWaitRoll = 27000
-local SeedStopRoll = 900
+local SeedStopRoll = 4500
 local _wait = task.wait
 
 repeat _wait() until game:IsLoaded()
@@ -12,16 +12,16 @@ local deleteRemote = ReplicatedStorage:WaitForChild("RemoteFunctions"):WaitForCh
 local StartRolls = false
 
 local function Roll()
-    -- local args = {
-	--     "ub_bee",
-	--     10
-    -- }
-    -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
-	local args = {
-	    "ub_classic_v9",
+    local args = {
+	    "ub_bee",
 	    10
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
+	-- local args = {
+	--     "ub_classic_v9",
+	--     10
+    -- }
+    -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
 end
 
 local function RemoveUnit()
