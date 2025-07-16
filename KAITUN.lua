@@ -376,9 +376,10 @@ end
 local StartRolls = false
 local function Roll()
     while StartRolls do
+        local Have = CheckHave()
         local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
         local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-        if (tonumber(SeedHave) <= 399) then
+        if (tonumber(SeedHave) <= 399) or Have then
             StartRolls = false
             break
         end
