@@ -29,11 +29,11 @@ local function CheckHave()
     for uniqueId, unitData in pairs(inventory or {}) do
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = Share.GetItem(itemId).Rarity
-        if itemId == "unit_laser_plant" or itemId == "unit_farmer_npc" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_radish" or itemId == "unit_tomato_plant" then
             table.insert(unithave, itemId)
         end
     end
-    if table.find(unithave, "unit_laser_plant") and table.find(unithave, "unit_farmer_npc") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -52,7 +52,7 @@ local function RemoveUnit()
 		local itemId = unitData.ItemData and unitData.ItemData.ID
 		local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
 
-		if rarity.Rarity == "ra_godly" or itemId == "unit_laser_plant" or itemId == "unit_farmer_npc" or itemId == "unit_tomato_plant" then
+		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" then
 			kept[itemId] = true
 			continue
 		end
@@ -81,7 +81,7 @@ local function ReturnForLobby()
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
-        if itemId == "unit_laser_plant" or itemId == "unit_farmer_npc" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_radish" or itemId == "unit_tomato_plant" then
             local args = {
                 tostring(uniqueId),
                 true
@@ -99,7 +99,7 @@ local function ReturnForLobby()
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("DeleteUnit"):InvokeServer(unpack(args))
         end
     end
-    if table.find(unithave, "unit_laser_plant") and table.find(unithave, "unit_farmer_npc") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -135,6 +135,13 @@ local function PlayLose()
         task.wait(1)
     end
 end
+local function RedeemCode()
+    local codes = {"TROPICAL", "VIBES"}
+    for _, code in ipairs(codes) do
+        local args = { code }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RedeemCode"):InvokeServer(unpack(args))
+    end
+end
 local function PlayWin()
     local args = {
         "dif_easy"
@@ -149,32 +156,28 @@ local function PlayWin()
         unpack(args)
     )
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
-    if not workspace.Map.Entities:FindFirstChild("unit_farmer_npc") then
-        local args = {
-	        "unit_farmer_npc",
-	        {
-		        Valid = true,
-		        Rotation = 180,
-		        CF = CFrame.new(-331.5242614746094, 63.38456726074219, -133.7012939453125, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-331.5242614746094, 63.38456726074219, -133.7012939453125)
-	        }
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+    local radishCount = 0
+    for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
+        if child.Name == "unit_radish" then
+            radishCount = radishCount + 1
+        end
     end
-    if not workspace.Map.Entities:FindFirstChild("unit_laser_plant") then
+    if radishCount < 10 then
         local args = {
-	        "unit_laser_plant",
-	        {
-		        Valid = true,
-		        Rotation = 180,
-		        CF = CFrame.new(-322.96856689453125, 63.34716033935547, -144.98504638671875, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-322.96856689453125, 63.34716033935547, -144.98504638671875)
-	        } 
+            "unit_radish",
+            {
+                Valid = true,
+                Rotation = 180,
+                CF = CFrame.new(-331.64239501953125, 62.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+                Position = vector.create(-331.64239501953125, 62.703956604003906, -133.88951110839844)
+            }
         }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
+            unpack(args)
+        )
     end
     for i,v in pairs(workspace.Map.Entities:GetChildren()) do
-        if v.name == "unit_farmer_npc" or v.name == "unit_laser_plant" then
+        if v.name == "unit_radish" then
             local args = {
 	            tonumber(v:GetAttribute("ID"))
             }
@@ -300,7 +303,7 @@ local function AntiAfk2()
     )
 end
 local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Laser Plant") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Farmer") then
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Radish") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
         return true
     else
         return false
@@ -312,7 +315,7 @@ task.spawn(function()
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-            if (not Have and tonumber(SeedHave) > 5000) then
+            if (not Have and tonumber(SeedHave) > 2000) then
                 print('Nothinh')
             else
                 task.wait(100)
@@ -370,35 +373,47 @@ local function isAnyPlayerNearby(maxDistance, cframe)
     end
     return true -- Không có người chơi nào gần đó
 end
-
+local StartRolls = false
+local function Roll()
+    while StartRolls do
+        local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
+        local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+        if (tonumber(SeedHave) <= 399) then
+            StartRolls = false
+            break
+        end
+        local args = {
+	        "ub_tropical",
+	        1
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
+        local args = {
+            "ub_classic_v4",
+            1
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
+        RemoveUnit()
+        task.wait(0.5)
+    end
+end
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
         LowCpu()
         while true do
             game:GetService("RunService"):Set3dRenderingEnabled(false)
-            setfpscap(10)
+            RedeemCode()
+            setfpscap(15)
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
             local maxDistance = 7 -- Khoảng cách tối đa (studs)
-            if (not Have and tonumber(SeedHave) > 5000) then
-                local args = {
-	                "ub_jungle",
-	                10
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
-                local args = {
-                    "ub_classic_v4",
-                    10
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(
-                    unpack(args)
-                )
-                RemoveUnit()
+            if (not Have and tonumber(SeedHave) > 400) then
+                StartRolls = true
+                Roll()
             elseif Have and not CheckBackPack() then
                 ReturnForLobby()
-            elseif Have or tonumber(SeedHave) < 5000 then
+            elseif Have or tonumber(SeedHave) < 400 then
                 local args = {
                     "unique_1",
                     true
@@ -438,7 +453,7 @@ local function main()
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(10)
+        setfpscap(15)
         while true do
             Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
@@ -453,10 +468,10 @@ local function main()
                 if workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() and tonumber(Wins.Text) < 25 then
                     print('PlayWin')
                     PlayWin()
-                elseif tonumber(Seed) < 15000 and not CheckBackPack() then
+                elseif tonumber(Seed) < 2000 and not CheckBackPack() then
                     print('PlayLose')
                     PlayLose()
-                elseif tonumber(Seed) >= 15000 and not CheckBackPack() then
+                elseif tonumber(Seed) >= 2000 and not CheckBackPack() then
                     game:shutdown()
                 elseif tonumber(Wins.Text) >= 25 then
                     game:shutdown()
