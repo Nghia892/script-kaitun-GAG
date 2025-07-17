@@ -356,8 +356,15 @@ task.spawn(function()
         task.wait(1)
     end
 end)
-
-
+local function CheckAnotherPlayer()
+    local Players = game:GetService("Players")
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= Players.LocalPlayer then
+            return true -- Có người chơi khác trong game
+        end
+    end
+    return false -- Không có người chơi khác
+end
 local function isAnyPlayerNearby(maxDistance, cframe)
     local targetCFrame = cframe
     for _, player in pairs(game.Players:GetPlayers()) do
@@ -462,6 +469,10 @@ local function main()
         AntiAfk2()
         setfpscap(15)
         while true do
+            if CheckAnotherPlayer() then
+                print('Have another player')
+                game:shutdown()
+            end
             Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
             local Seed = SeedValue:find("[Kk]") and SeedValue:gsub("[Kk]", "") * 1000 or SeedValue:gsub(",", "")
