@@ -402,7 +402,7 @@ local function main()
     if game.PlaceId == 108533757090220 then
         LowCpu()
         while true do
-            game:GetService("RunService"):Set3dRenderingEnabled(true)
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
             RedeemCode()
             setfpscap(15)
             local Have = CheckHave()
