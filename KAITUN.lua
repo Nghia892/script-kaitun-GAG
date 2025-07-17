@@ -423,25 +423,32 @@ local function main()
                     unpack(args)
                 )
                 if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
-                    local parttouch = workspace.Map.LobbiesFarm.GameLobby.Cage.Part
-                    if isAnyPlayerNearby(maxDistance, parttouch.CFrame) then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = parttouch.CFrame
-                        local args = {
-	                        "map_farm"
-                        }
-                        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMap_6"):InvokeServer(unpack(args))
-                        -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
-                    else
-                        hopServer()
+                    local parttouch = workspace.Map.LobbiesFarm
+                    for map,world in pairs(parttouch:GetChildren()) do
+                        if world:GetAttribute("MaxPlayers") == 1 then
+                            if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = world.Cage.Part.CFrame
+                                local args = {
+	                                "map_farm"
+                                }
+                                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMap_6"):InvokeServer(unpack(args))
+                                -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
+                            else
+                                hopServer()
+                            end
+                        end
                     end
                 else
-                    local parttouch = workspace.Map.LobbiesIsland:GetChildren()[4].Cage.Part
-                    if isAnyPlayerNearby(maxDistance, parttouch.CFrame) then
-                        local plrtouch = game.Players.LocalPlayer.Character.HumanoidRootPart
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = parttouch.CFrame
-                        -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
-                    else
-                        hopServer()
+                    local parttouch = workspace.Map.LobbiesIsland
+                    for map,world in pairs(parttouch:GetChildren()) do
+                        if world:GetAttribute("MaxPlayers") == 1 then
+                            if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = world.Cage.Part.CFrame
+                                -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
+                            else
+                                hopServer()
+                            end
+                        end
                     end
                 end
                 task.wait(2)
