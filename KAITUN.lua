@@ -439,7 +439,6 @@ local function main()
                     if isAnyPlayerNearby(maxDistance, parttouch.CFrame) then
                         local plrtouch = game.Players.LocalPlayer.Character.HumanoidRootPart
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = parttouch.CFrame
-                        workspace.Map.LobbiesIsland:GetChildren()[4].Cage.Part.TouchInterest:Fire()
                         -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_12"):InvokeServer()
                     else
                         hopServer()
