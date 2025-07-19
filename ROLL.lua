@@ -18,7 +18,7 @@ local function Roll()
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
     local args = {
-	    "ub_bee",
+	    "ub_sun",
 	    10
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
