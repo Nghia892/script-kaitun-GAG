@@ -142,6 +142,16 @@ local function RedeemCode()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RedeemCode"):InvokeServer(unpack(args))
     end
 end
+local function UpgradeU()
+    for i,v in pairs(workspace.Map.Entities:GetChildren()) do
+        if v.name == "unit_radish" then
+            local args = {
+	            tonumber(v:GetAttribute("ID"))
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
+        end
+    end
+end
 local function PlayWin()
     local args = {
         "dif_easy"
@@ -162,7 +172,7 @@ local function PlayWin()
             radishCount = radishCount + 1
         end
     end
-    if radishCount < 9 then
+    if radishCount < 7 then
         local args = {
             "unit_radish",
             {
@@ -175,15 +185,21 @@ local function PlayWin()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
             unpack(args)
         )
-    end
-    for i,v in pairs(workspace.Map.Entities:GetChildren()) do
-        if v.name == "unit_radish" then
-            local args = {
-	            tonumber(v:GetAttribute("ID"))
+    elseif radishCount < 10 and workspace:GetAttribute("Round") >= 20 then
+        local args = {
+            "unit_radish",
+            {
+                Valid = true,
+                Rotation = 180,
+                CF = CFrame.new(-362.6770324707031, 62.703956604003906, -177.55064392089844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+                Position = vector.create(-362.6770324707031, 62.703956604003906, -177.55064392089844)
             }
-            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
-        end
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
+            unpack(args)
+        )
     end
+    task.spawn(UpgradeU)
 end
 local function AntiLag()
     local Terrain = workspace:FindFirstChildOfClass("Terrain")
@@ -471,11 +487,11 @@ local function main()
             task.wait()
         end
     else
-        game:GetService("RunService"):Set3dRenderingEnabled(false)
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(15)
+        setfpscap(60)
         while true do
             if CheckAnotherPlayer() then
                 print('Have another player')
