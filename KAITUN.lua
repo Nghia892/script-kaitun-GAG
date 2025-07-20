@@ -438,7 +438,7 @@ local function main()
                                 local args = {
 	                                "map_farm"
                                 }
-                                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMap_6"):InvokeServer(unpack(args))
+                                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMap_7"):InvokeServer(unpack(args))
                                 -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
                             else
                                 hopServer()
