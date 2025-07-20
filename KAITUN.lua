@@ -432,7 +432,7 @@ local function main()
                 if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
                     local parttouch = workspace.Map.LobbiesFarm
                     for map,world in pairs(parttouch:GetChildren()) do
-                        if world:GetAttribute("MaxPlayers") < 4 then
+                        if world:GetAttribute("MaxPlayers") == 1 then
                             if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
                                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = world.Cage.Part.CFrame
                                 local args = {
