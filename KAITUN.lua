@@ -487,11 +487,11 @@ local function main()
             task.wait()
         end
     else
-        game:GetService("RunService"):Set3dRenderingEnabled(true)
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(60)
+        setfpscap(15)
         while true do
             if CheckAnotherPlayer() then
                 print('Have another player')
