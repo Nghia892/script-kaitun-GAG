@@ -357,7 +357,7 @@ task.spawn(function()
             lastSeedValue = SeedHave
         elseif lastSeedValue then
             timeSinceLastChange = timeSinceLastChange + 1
-            if timeSinceLastChange >= 180 then
+            if timeSinceLastChange >= 500 then
                 print("No change in SeedHave for 3 minutes: " .. SeedHave)
                 if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
                     ReplicatedStorage.RemoteFunctions.BackToMainLobby:InvokeServer()
