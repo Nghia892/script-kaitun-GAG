@@ -1,4 +1,4 @@
-local SeedWaitRoll = 8100
+local SeedWaitRoll = 9900
 local SeedStopRoll = 2700
 local _wait = task.wait
 
