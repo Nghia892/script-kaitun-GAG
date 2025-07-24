@@ -172,6 +172,7 @@ local function PlayWin()
             radishCount = radishCount + 1
         end
     end
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125, 65.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
     if radishCount < 7 then
         local args = {
             "unit_radish",
@@ -420,6 +421,14 @@ local function Roll()
         task.wait(0.5)
     end
 end
+task.spawn(function()
+    while true do
+        if game:GetService("CoreGui").RobloxPromptGui.promptOverlay.Active then
+            game:shutdown()
+        end
+        task.wait(10)
+    end
+end)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
