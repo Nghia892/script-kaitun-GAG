@@ -175,6 +175,7 @@ local function PlayWin()
     end
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125, 65.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
     if radishCount < 7 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125, 65.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
         local args = {
             "unit_radish",
             {
@@ -188,6 +189,7 @@ local function PlayWin()
             unpack(args)
         )
     elseif radishCount < 10 and workspace:GetAttribute("Round") >= 20 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-362.6770324707031, 66.703956604003906, -177.55064392089844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
         local args = {
             "unit_radish",
             {
