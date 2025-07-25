@@ -119,15 +119,15 @@ local function PlayLose()
         unpack(args)
     )
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-42.448734283447266, -25.522750854492188, 84.18336486816406)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-42.448734283447266 + math.random(-10, 10), -25.522750854492188, 84.18336486816406 + math.random(-10, 10))
     if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
         local args = {
             "unit_tomato_plant",
             {
                 Valid = true,
                 Rotation = 180,
-                CF = CFrame.new(-42.448734283447266, -29.522750854492188, 84.18336486816406),
-                Position = vector.create(-42.448734283447266, -29.522750854492188, 84.18336486816406)
+                CF = CFrame.new(-42.448734283447266 + math.random(-2, 2), -29.522750854492188 + math.random(-2, 2), 84.18336486816406 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+                Position = vector.create(-42.448734283447266 + math.random(-2, 2), -29.522750854492188 + math.random(-2, 2), 84.1833648681640 + math.random(-2, 2), 6)
             }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
@@ -173,30 +173,30 @@ local function PlayWin()
             radishCount = radishCount + 1
         end
     end
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125, 65.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125 + math.random(-10, 10), 65.703956604003906, -133.88951110839844 + math.random(-10, 10), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
     if radishCount < 7 then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125, 65.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125 + math.random(-10, 10), 65.703956604003906, -133.88951110839844 + math.random(-10, 10), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
         local args = {
             "unit_radish",
             {
                 Valid = true,
                 Rotation = 180,
-                CF = CFrame.new(-331.64239501953125, 62.703956604003906, -133.88951110839844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-                Position = vector.create(-331.64239501953125, 62.703956604003906, -133.88951110839844)
+                CF = CFrame.new(-331.64239501953125 + math.random(-2, 2), 62.703956604003906+ math.random(-2, 2), -133.88951110839844 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+                Position = vector.create(-331.64239501953125 + math.random(-2, 2), 62.703956604003906 + math.random(-2, 2), -133.88951110839844 + math.random(-2, 2))
             }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
             unpack(args)
         )
     elseif radishCount < 10 and workspace:GetAttribute("Round") >= 20 then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-362.6770324707031, 66.703956604003906, -177.55064392089844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-362.6770324707031 + math.random(-10, 10), 66.703956604003906 , -177.55064392089844 + math.random(-10, 10), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
         local args = {
             "unit_radish",
             {
                 Valid = true,
                 Rotation = 180,
-                CF = CFrame.new(-362.6770324707031, 62.703956604003906, -177.55064392089844, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-                Position = vector.create(-362.6770324707031, 62.703956604003906, -177.55064392089844)
+                CF = CFrame.new(-362.6770324707031 + math.random(-2, 2), 62.703956604003906 + math.random(-2, 2), -177.55064392089844 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+                Position = vector.create(-362.6770324707031 + math.random(-2, 2), 62.703956604003906 + math.random(-2, 2), -177.55064392089844 + math.random(-2, 2))
             }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
