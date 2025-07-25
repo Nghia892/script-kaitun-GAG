@@ -119,6 +119,7 @@ local function PlayLose()
         unpack(args)
     )
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-42.448734283447266, -25.522750854492188, 84.18336486816406)
     if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
         local args = {
             "unit_tomato_plant",
@@ -454,7 +455,7 @@ local function main()
                 game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(
                     unpack(args)
                 )
-                if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
+                if tonumber(Wins.Text) < 30 and Have and CheckBackPack() then
                     local parttouch = workspace.Map.LobbiesFarm
                     for map,world in pairs(parttouch:GetChildren()) do
                         if world:GetAttribute("MaxPlayers") == 1 then
