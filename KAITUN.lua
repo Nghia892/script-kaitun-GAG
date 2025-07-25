@@ -18,7 +18,7 @@ local function AutoSkip()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SkipWave"):InvokeServer(
             unpack(args)
         )
-        task.wait(0.3)
+        task.wait(15)
     end
 end
 local function CheckHave()
@@ -431,6 +431,8 @@ task.spawn(function()
         end
         task.wait(10)
     end
+end)
+task.spawn(function()
 end)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
