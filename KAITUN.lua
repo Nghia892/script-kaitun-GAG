@@ -99,9 +99,7 @@ local function ReturnForLobby()
                 tostring(uniqueId),
                 false
             }
-            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(
-                unpack(args)
-            )
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
         end
     end
     if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
@@ -158,6 +156,7 @@ local function UpgradeU()
             }
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
         end
+        task.wait()
     end
 end
 local function PlayWin()
