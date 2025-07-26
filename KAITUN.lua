@@ -325,7 +325,6 @@ local function AntiAfk2()
             while true do
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
-                setfpscap(8)
                 task.wait(5)
             end
         end
@@ -441,8 +440,6 @@ task.spawn(function()
         task.wait(10)
     end
 end)
-task.spawn(function()
-end)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
@@ -520,7 +517,6 @@ local function main()
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(8)
         while true do
             if CheckAnotherPlayer() then
                 print('Have another player')
@@ -534,13 +530,16 @@ local function main()
                     game:shutdown()
                 elseif workspace.Map.BaseHP.CFrame == CFrame.new(-143.476471, -25.6971436, 214.589005, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() then
                     PlayLose()
+                    setfpscap(8)
                 end
             else
                 if workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() and tonumber(Wins.Text) < 25 then
                     print('PlayWin')
+                    setfpscap(15)
                     PlayWin()
                 elseif tonumber(Seed) < 2000 and not CheckBackPack() then
                     print('PlayLose')
+                    setfpscap(8)
                     PlayLose()
                 elseif tonumber(Seed) >= 2000 and not CheckBackPack() then
                     game:shutdown()
