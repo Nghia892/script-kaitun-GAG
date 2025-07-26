@@ -7,18 +7,21 @@ repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Sc
 repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.ClientDataHandler
 repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.Modules.SharedItemData
+local GuiService = game:GetService("GuiService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+GuiService.AutoSelectGuiEnabled = true
 task.wait(5)
 local Players = game:GetService("Players")
 local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
     while true do
-        local args = {
-            "y"
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SkipWave"):InvokeServer(
-            unpack(args)
-        )
-        task.wait(15)
+        local SkipGui = game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.AutoSkip
+        if SkipGui.Title.Text ~= "Auto Skip: On" then
+            GuiService.SelectedObject = SkipGui
+            VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+            VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+        end
+        task.wait(2)
     end
 end
 local function CheckHave()
@@ -52,7 +55,7 @@ local function RemoveUnit()
 		local itemId = unitData.ItemData and unitData.ItemData.ID
 		local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
 
-		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" then
+		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or itemId == "unit_radish" then
 			kept[itemId] = true
 			continue
 		end
@@ -81,6 +84,7 @@ local function ReturnForLobby()
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
+        RemoveUnit()
         if itemId == "unit_radish" or itemId == "unit_tomato_plant" then
             local args = {
                 tostring(uniqueId),
@@ -90,13 +94,6 @@ local function ReturnForLobby()
                 unpack(args)
             )
             table.insert(unithave, itemId)
-        elseif rarity.Rarity ~= "ra_godly" then
-            local args = {
-	            {
-		            tostring(uniqueId),
-	            }
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("DeleteUnit"):InvokeServer(unpack(args))
         end
     end
     if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
@@ -106,20 +103,22 @@ local function ReturnForLobby()
     end
 end
 local function PlayLose()
-    local args = {
-        "dif_impossible"
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(
-        unpack(args)
-    )
-    local args = {
-        2
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(
-        unpack(args)
-    )
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-42.448734283447266 + math.random(-10, 10), -25.522750854492188, 84.18336486816406 + math.random(-10, 10))
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
+        local args = {
+            "dif_impossible"
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.TickSpeed.Items["2"].ImageColor3 ~= Color3.fromRGB(115, 230, 0) then
+        local args = {
+            2
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
+    end
+    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-42.448734283447266 + math.random(-10, 10), -25.522750854492188, 84.18336486816406 + math.random(-10, 10)))
     if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
         local args = {
             "unit_tomato_plant",
@@ -154,28 +153,30 @@ local function UpgradeU()
     end
 end
 local function PlayWin()
-    local args = {
-        "dif_easy"
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(
-        unpack(args)
-    )
-    local args = {
-        2
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(
-        unpack(args)
-    )
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
+        local args = {
+            "dif_easy"
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.TickSpeed.Items["2"].ImageColor3 ~= Color3.fromRGB(115, 230, 0) then
+        local args = {
+            2
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
+    end
     local radishCount = 0
     for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
         if child.Name == "unit_radish" then
             radishCount = radishCount + 1
         end
     end
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125 + math.random(-10, 10), 65.703956604003906, -133.88951110839844 + math.random(-10, 10), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
+    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(331.64239501953125 + math.random(-10, 20), 65.703956604003906, -133.88951110839844 + math.random(-10, 20)))
     if radishCount < 7 then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-331.64239501953125 + math.random(-10, 10), 65.703956604003906, -133.88951110839844 + math.random(-10, 10), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
+        game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(331.64239501953125 + math.random(-10, 10), 65.703956604003906, -133.88951110839844 + math.random(-10, 10)))
         local args = {
             "unit_radish",
             {
@@ -189,7 +190,7 @@ local function PlayWin()
             unpack(args)
         )
     elseif radishCount < 10 and workspace:GetAttribute("Round") >= 20 then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-362.6770324707031 + math.random(-10, 10), 66.703956604003906 , -177.55064392089844 + math.random(-10, 10), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1)
+        game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-362.6770324707031 + math.random(-10, 10), 66.703956604003906 , -177.55064392089844 + math.random(-10, 10)))
         local args = {
             "unit_radish",
             {
@@ -456,9 +457,7 @@ local function main()
                     "unique_1",
                     true
                 }
-                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(
-                    unpack(args)
-                )
+                game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
                 if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
                     local parttouch = workspace.Map.LobbiesFarm
                     for map,world in pairs(parttouch:GetChildren()) do
@@ -468,7 +467,7 @@ local function main()
                                 local args = {
 	                                "map_farm"
                                 }
-                                for i = 1, 14 do
+                                for i = 6, 9 do
                                     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMap_" .. i):InvokeServer(unpack(args))
                                     local args2 = {
 	                                    1
@@ -489,6 +488,14 @@ local function main()
                         if world:GetAttribute("MaxPlayers") == 1 then
                             if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
                                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = world.Cage.Part.CFrame
+                                for i = 10, 13 do
+                                    local args2 = {
+	                                    1
+                                    }
+                                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMaxPlayers_" .. i):InvokeServer(unpack(args2))
+
+                                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_" .. i):InvokeServer()
+                                end
                                 -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
                             else
                                 hopServer()
@@ -539,26 +546,26 @@ local function main()
 end
 
 -- Hàm chạy script với xử lý lỗi
-local function runScript()
-    local errorCount = 0
-    while true do
-        local success, errorMessage = pcall(main)
-        if not success then
-            errorCount = errorCount + 1
-            print("Error occurred: " .. tostring(errorMessage))
-            if errorCount >= 5 then
-                print("Script has errored 5 times consecutively!")
-                game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
-            end
-            print("Restarting script in 5 seconds...")
-            task.wait(5)
-        else
-            errorCount = 0 -- Reset error count on success
-            break
-        end
-        task.wait()
-    end
-end
+-- local function runScript()
+--     local errorCount = 0
+--     while true do
+--         local success, errorMessage = pcall(main)
+--         if not success then
+--             errorCount = errorCount + 1
+--             print("Error occurred: " .. tostring(errorMessage))
+--             if errorCount >= 5 then
+--                 print("Script has errored 5 times consecutively!")
+--                 game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+--             end
+--             print("Restarting script in 5 seconds...")
+--             task.wait(5)
+--         else
+--             errorCount = 0 -- Reset error count on success
+--             break
+--         end
+--         task.wait()
+--     end
+-- end
 
 -- Chạy script
-runScript()
+main()
