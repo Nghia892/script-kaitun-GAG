@@ -140,7 +140,7 @@ local function PlayLose()
     end
 end
 local function RedeemCode()
-    local codes = {"PLAZA", "MYSTERY"}
+    local codes = {"PLAZA", "MYSTERY", "SLIME", "WASTE"}
     for _, code in ipairs(codes) do
         local args = { code }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RedeemCode"):InvokeServer(unpack(args))
