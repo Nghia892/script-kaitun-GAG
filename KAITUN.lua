@@ -204,7 +204,7 @@ local function PlayWin()
             unpack(args)
         )
     end
-    task.spawn(UpgradeU)
+    UpgradeU()
 end
 local function AntiLag()
     local Terrain = workspace:FindFirstChildOfClass("Terrain")
