@@ -442,7 +442,7 @@ local function main()
         while true do
             game:GetService("RunService"):Set3dRenderingEnabled(false)
             RedeemCode()
-            setfpscap(8)
+            setfpscap(15)
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
@@ -512,7 +512,7 @@ local function main()
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(8)
+        setfpscap(15)
         while true do
             if CheckAnotherPlayer() then
                 print('Have another player')
@@ -545,27 +545,26 @@ local function main()
     end
 end
 
--- Hàm chạy script với xử lý lỗi
--- local function runScript()
---     local errorCount = 0
---     while true do
---         local success, errorMessage = pcall(main)
---         if not success then
---             errorCount = errorCount + 1
---             print("Error occurred: " .. tostring(errorMessage))
---             if errorCount >= 5 then
---                 print("Script has errored 5 times consecutively!")
---                 game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
---             end
---             print("Restarting script in 5 seconds...")
---             task.wait(5)
---         else
---             errorCount = 0 -- Reset error count on success
---             break
---         end
---         task.wait()
---     end
--- end
+local function runScript()
+    local errorCount = 0
+    while true do
+        local success, errorMessage = pcall(main)
+        if not success then
+            errorCount = errorCount + 1
+            print("Error occurred: " .. tostring(errorMessage))
+            if errorCount >= 5 then
+                print("Script has errored 5 times consecutively!")
+                game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+            end
+            print("Restarting script in 5 seconds...")
+            task.wait(5)
+        else
+            errorCount = 0 -- Reset error count on success
+            break
+        end
+        task.wait()
+    end
+end
 
 -- Chạy script
-main()
+runScript()
