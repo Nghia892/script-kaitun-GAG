@@ -325,7 +325,7 @@ local function AntiAfk2()
             while true do
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
-                setfpscap(15)
+                setfpscap(8)
                 task.wait(5)
             end
         end
@@ -450,7 +450,7 @@ local function main()
         while true do
             game:GetService("RunService"):Set3dRenderingEnabled(false)
             RedeemCode()
-            setfpscap(15)
+            setfpscap(8)
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
@@ -520,7 +520,7 @@ local function main()
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
-        setfpscap(15)
+        setfpscap(8)
         while true do
             if CheckAnotherPlayer() then
                 print('Have another player')
