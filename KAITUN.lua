@@ -124,20 +124,18 @@ local function PlayLose()
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
-    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-42.448734283447266 + math.random(-10, 10), -25.522750854492188, 84.18336486816406 + math.random(-10, 10)))
+    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
     if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
         local args = {
-            "unit_tomato_plant",
-            {
-                Valid = true,
-                Rotation = 180,
-                CF = CFrame.new(-42.448734283447266 + math.random(-2, 2), -29.522750854492188 + math.random(-2, 2), 84.18336486816406 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-                Position = vector.create(-42.448734283447266 + math.random(-2, 2), -29.522750854492188 + math.random(-2, 2), 84.1833648681640 + math.random(-2, 2), 6)
-            }
+	        "unit_tomato_plant",
+	        {
+		        Valid = true,
+		        Rotation = 180,
+		        CF = CFrame.new(-1.561105728149414 + math.random(-2, 2), 3.16474986076355, 309.8352355957031 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-1.561105728149414 + math.random(-2, 2), 3.16474986076355, 309.8352355957031 + math.random(-2, 2))
+	        }
         }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
-            unpack(args)
-        )
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
         task.wait(1)
     end
 end
@@ -258,7 +256,7 @@ local function AntiLag()
 end
 local function LowCpu()
     for _, v in pairs(workspace.Map:GetChildren()) do
-        if v.Name ~= "LobbiesFarm" and v.Name ~= "LobbiesIsland" and v.Name ~= "Model" then
+        if v.Name ~= "LobbiesFarm" and v.Name ~= "RadioactiveSewer" and v.Name ~= "Model" then
             v:Destroy()
         end
     end
@@ -473,7 +471,7 @@ local function main()
                         end
                     end
                 else
-                    local parttouch = workspace.Map.LobbiesIsland
+                    local parttouch = workspace.Map.RadioactiveSewer
                     for map,world in pairs(parttouch:GetChildren()) do
                         if world:GetAttribute("MaxPlayers") == 1 then
                             if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
@@ -511,14 +509,14 @@ local function main()
             local SeedValue = game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
             local Seed = SeedValue:find("[Kk]") and SeedValue:gsub("[Kk]", "") * 1000 or SeedValue:gsub(",", "")
             if tonumber(Wins.Text) >= 25 then
-                if workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) then
+                if workspace:GetAttribute("MapId") == "map_farm" then
                     game:shutdown()
-                elseif workspace.Map.BaseHP.CFrame == CFrame.new(-143.476471, -25.6971436, 214.589005, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() then
+                elseif workspace:GetAttribute("MapId") == "map_toxic" and CheckBackPack() then
                     PlayLose()
                     setfpscap(8)
                 end
             else
-                if workspace.Map.BaseHP.CFrame == CFrame.new(-335.381012, 68.4682846, -252.007782, 0, 0, 1, 0, 1, -0, -1, 0, 0) and CheckBackPack() and tonumber(Wins.Text) < 25 then
+                if workspace:GetAttribute("MapId") == "map_farm" and CheckBackPack() and tonumber(Wins.Text) < 25 then
                     print('PlayWin')
                     setfpscap(15)
                     PlayWin()
