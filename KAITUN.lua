@@ -174,9 +174,9 @@ local function PlayWin()
             radishCount = radishCount + 1
         end
     end
-    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
+    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.522750854492188, -133.88951110839844 + math.random(-10, 10)))
     if radishCount < 7 then
-        game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
+        game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
         local args = {
             "unit_radish",
             {
