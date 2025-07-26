@@ -318,6 +318,7 @@ local function AntiAfk2()
             while true do
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
+                setfpscap(15)
                 task.wait(5)
             end
         end
