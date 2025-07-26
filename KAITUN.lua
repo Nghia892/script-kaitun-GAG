@@ -94,6 +94,14 @@ local function ReturnForLobby()
                 unpack(args)
             )
             table.insert(unithave, itemId)
+        elseif unitData.Equipped == true then
+            local args = {
+                tostring(uniqueId),
+                false
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(
+                unpack(args)
+            )
         end
     end
     if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
