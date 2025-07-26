@@ -32,11 +32,11 @@ local function CheckHave()
     for uniqueId, unitData in pairs(inventory or {}) do
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = Share.GetItem(itemId).Rarity
-        if itemId == "unit_radish" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
             table.insert(unithave, itemId)
         end
     end
-    if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -55,7 +55,7 @@ local function RemoveUnit()
 		local itemId = unitData.ItemData and unitData.ItemData.ID
 		local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
 
-		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or itemId == "unit_radish" then
+		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or itemId == "unit_pineapple" then
 			kept[itemId] = true
 			continue
 		end
@@ -85,7 +85,7 @@ local function ReturnForLobby()
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
         RemoveUnit()
-        if itemId == "unit_radish" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
             local args = {
                 tostring(uniqueId),
                 true
@@ -102,7 +102,7 @@ local function ReturnForLobby()
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
         end
     end
-    if table.find(unithave, "unit_radish") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -150,11 +150,12 @@ local function RedeemCode()
 end
 local function UpgradeU()
     for i,v in pairs(workspace.Map.Entities:GetChildren()) do
-        if v.name == "unit_radish" then
+        if v.name == "unit_pineapple" then
             local args = {
 	            tonumber(v:GetAttribute("ID"))
             }
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
+            task.wait()
         end
     end
 end
@@ -176,7 +177,7 @@ local function PlayWin()
     end
     local radishCount = 0
     for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
-        if child.Name == "unit_radish" then
+        if child.Name == "unit_pineapple" then
             radishCount = radishCount + 1
         end
     end
@@ -184,31 +185,15 @@ local function PlayWin()
     if radishCount < 7 then
         game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
         local args = {
-            "unit_radish",
-            {
-                Valid = true,
-                Rotation = 180,
-                CF = CFrame.new(-331.64239501953125 + math.random(-2, 2), 62.703956604003906+ math.random(-2, 2), -133.88951110839844 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-                Position = vector.create(-331.64239501953125 + math.random(-2, 2), 62.703956604003906 + math.random(-2, 2), -133.88951110839844 + math.random(-2, 2))
-            }
+	        "unit_pineapple",
+	        {
+		        Valid = true,
+		        Rotation = 180,
+		        CF = CFrame.new(-331.9243469238281, 62.845054626464844, -134.27297973632812, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-331.9243469238281, 62.845054626464844, -134.27297973632812)
+	        }
         }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
-            unpack(args)
-        )
-    elseif radishCount < 10 and workspace:GetAttribute("Round") >= 20 then
-        game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-362.6770324707031 + math.random(-10, 10), 62.703956604003906 , -177.55064392089844 + math.random(-10, 10)))
-        local args = {
-            "unit_radish",
-            {
-                Valid = true,
-                Rotation = 180,
-                CF = CFrame.new(-362.6770324707031 + math.random(-2, 2), 62.703956604003906 + math.random(-2, 2), -177.55064392089844 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-                Position = vector.create(-362.6770324707031 + math.random(-2, 2), 62.703956604003906 + math.random(-2, 2), -177.55064392089844 + math.random(-2, 2))
-            }
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(
-            unpack(args)
-        )
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
     end
     UpgradeU()
 end
@@ -418,13 +403,14 @@ local function Roll()
             break
         end
         local args = {
-	        "ub_tropical",
-	        1
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
-        local args = {
             "ub_classic_v4",
             1
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
+
+        local args = {
+	        "ub_classic_v5",
+	        1
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
         RemoveUnit()
