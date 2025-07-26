@@ -315,7 +315,7 @@ local function AntiAfk2()
     )
 end
 local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Radish") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
         return true
     else
         return false
