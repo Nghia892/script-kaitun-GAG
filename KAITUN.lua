@@ -530,6 +530,8 @@ local function main()
                 elseif workspace:GetAttribute("MapId") == "map_toxic" and CheckBackPack() then
                     PlayLose()
                     setfpscap(8)
+                elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
+                    PlayLose()
                 end
             else
                 if workspace:GetAttribute("MapId") == "map_farm" and CheckBackPack() and tonumber(Wins.Text) < 25 then
