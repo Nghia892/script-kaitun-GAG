@@ -156,7 +156,6 @@ local function UpgradeU()
             }
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
         end
-        task.wait()
     end
 end
 local function PlayWin()
