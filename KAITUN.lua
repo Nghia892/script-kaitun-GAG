@@ -18,6 +18,7 @@ local function AutoSkip()
         local SkipGui = game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.AutoSkip
         if SkipGui.Title.Text ~= "Auto Skip: On" then
             GuiService.SelectedObject = SkipGui
+            task.wait()
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
             VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
         end
