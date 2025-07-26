@@ -182,16 +182,31 @@ local function PlayWin()
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.522750854492188, -133.88951110839844 + math.random(-10, 10)))
     if radishCount < 7 then
         game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
-        local args = {
-	        "unit_pineapple",
-	        {
-		        Valid = true,
-		        Rotation = 180,
-		        CF = CFrame.new(-331.9243469238281, 62.845054626464844, -134.27297973632812, -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-331.9243469238281, 62.845054626464844, -134.27297973632812)
-	        }
+        local PosList = {
+            Vector3.new(-331.9243469238281, 62.845054626464844, -134.27297973632812),
+            Vector3.new(-329.5567626953125, 62.845054626464844, -134.15237426757812),
+            Vector3.new(-332.0066833496094, 62.845054626464844, -130.7923583984375),
+            Vector3.new(-325.93145751953125, 62.845054626464844, -133.91928100585938),
+            Vector3.new(-332.1609802246094, 62.845054626464844, -128.2115936279297),
+            Vector3.new(-329.1172790527344, 62.845054626464844, -131.216552734375),
+            Vector3.new(-327.5411376953125, 62.845054626464844, -145.2104034423828),
+            Vector3.new(-324.3938903808594, 62.845054626464844, -146.91738891601562),
+            Vector3.new(-321.1422119140625, 62.845054626464844, -147.17340087890625),
         }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+        local pos = PosList[math.random(1, #PosList)]
+        print('LAY')
+        if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 300 then
+            local args = {
+                "unit_pineapple",
+                {
+                    Valid = true,
+                    Rotation = 180,
+                    CF = CFrame.new(pos),
+                    Position = pos
+                }
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+        end
     end
     UpgradeU()
 end
