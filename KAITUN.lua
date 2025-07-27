@@ -147,13 +147,23 @@ local function RedeemCode()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RedeemCode"):InvokeServer(unpack(args))
     end
 end
+if (workspace.Map.Entities.unit_pineapple.OwnedIndicator) then
+    if string.format("%.2f",workspace.Map.Entities.unit_pineapple.OwnedIndicator.Size.X) == "0.30" then
+        print('1')
+    end
+end
+
 local function UpgradeU()
     for i,v in pairs(workspace.Map.Entities:GetChildren()) do
         if v.name == "unit_pineapple" then
-            local args = {
-	            tonumber(v:GetAttribute("ID"))
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
+            if string.format("%.2f",v.OwnedIndicator.Size.X) == "0.30" then
+                if (v.OwnedIndicator) then
+                    local args = {
+	                    tonumber(v:GetAttribute("ID"))
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
+                end
+            end
             task.wait()
         end
     end
@@ -211,6 +221,8 @@ local function PlayWin()
     end
     UpgradeU()
 end
+
+
 local function AntiLag()
     local Terrain = workspace:FindFirstChildOfClass("Terrain")
     local Lighting = game:GetService("Lighting")
@@ -479,6 +491,7 @@ local function main()
                                     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMaxPlayers_" .. i):InvokeServer(unpack(args2))
 
                                     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_" .. i):InvokeServer()
+                                    task.wait()
                                 end
                                 -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
                             else
@@ -499,6 +512,7 @@ local function main()
                                     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("LobbySetMaxPlayers_" .. i):InvokeServer(unpack(args2))
 
                                     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_" .. i):InvokeServer()
+                                    task.wait()
                                 end
                                 -- game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("StartLobby_1"):InvokeServer()
                             else
