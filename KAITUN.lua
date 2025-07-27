@@ -147,11 +147,6 @@ local function RedeemCode()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RedeemCode"):InvokeServer(unpack(args))
     end
 end
-if (workspace.Map.Entities.unit_pineapple.OwnedIndicator) then
-    if string.format("%.2f",workspace.Map.Entities.unit_pineapple.OwnedIndicator.Size.X) == "0.30" then
-        print('1')
-    end
-end
 
 local function UpgradeU()
     for i,v in pairs(workspace.Map.Entities:GetChildren()) do
