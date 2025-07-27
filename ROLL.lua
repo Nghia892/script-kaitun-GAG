@@ -76,7 +76,7 @@ local function StartRoll()
 		
 		Roll()
 		task.spawn(RemoveUnit)
-		_wait(0.5)
+		_wait(2)
 	end
 end
 
