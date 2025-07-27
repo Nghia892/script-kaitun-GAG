@@ -213,8 +213,11 @@ local function PlayWin()
             }
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
         end
+    else
+        if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 500 then
+            UpgradeU()
+        end
     end
-    UpgradeU()
 end
 
 
