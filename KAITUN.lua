@@ -157,6 +157,7 @@ local function UpgradeU()
 	                    tonumber(v:GetAttribute("ID"))
                     }
                     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
+                    task.wait(0.3)
                 end
             end
             task.wait()
