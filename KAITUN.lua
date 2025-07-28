@@ -452,7 +452,7 @@ task.spawn(function()
 end)
 task.spawn(function()
     while true do
-        task.wait(1800)
+        task.wait(3600)
         if ame:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
             game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
         else
