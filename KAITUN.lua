@@ -464,6 +464,7 @@ local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Mid
 local function main()
     if game.PlaceId == 108533757090220 then
         LowCpu()
+        game:GetService("ReplicatedStorage").RemoteFunctions.ClientSetFlag:Destroy() 
         while true do
             game:GetService("RunService"):Set3dRenderingEnabled(false)
             RedeemCode()
