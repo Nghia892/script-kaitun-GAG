@@ -387,7 +387,7 @@ task.spawn(function()
             if timeSinceLastChange >= timedelay then
                 print("No change in SeedHave for 3 minutes: " .. SeedHave)
                 if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
-                    ReplicatedStorage.RemoteFunctions.BackToMainLobby:InvokeServer()
+                    game:shutdown()
                 else
                     game:shutdown()
                 end
