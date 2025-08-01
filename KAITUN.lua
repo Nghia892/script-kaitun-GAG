@@ -574,7 +574,7 @@ local function main()
                     game:shutdown()
                 end
             end
-            task.wait()
+            task.wait(0.4)
         end
     end
 end
