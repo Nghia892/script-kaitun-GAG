@@ -369,7 +369,7 @@ task.spawn(function()
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local lastSeedValue, timeSinceLastChange = nil, 0
     while true do
-        local Seeds = tostring(Players.LocalPlayer.leaderstats.Seeds:FindFirstChild("Value39")) or game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value
+        local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
         local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
         SeedHave = tonumber(SeedHave)
 
