@@ -132,8 +132,8 @@ local function PlayLose()
 	        {
 		        Valid = true,
 		        Rotation = 180,
-		        CF = CFrame.new(-1.561105728149414 + math.random(-2, 2), 3.16474986076355, 309.8352355957031 + math.random(-2, 2), -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414 + math.random(-2, 2), 3.16474986076355, 309.8352355957031 + math.random(-2, 2))
+		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
