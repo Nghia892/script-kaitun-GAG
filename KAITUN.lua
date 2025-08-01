@@ -368,6 +368,12 @@ task.spawn(function()
     local Players = game:GetService("Players")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local lastSeedValue, timeSinceLastChange = nil, 0
+    local timedelay = nil
+    if workspace:GetAttribute("MapId") == "map_farm" then
+        timedelay = 500
+    else
+        timedelay = 100
+    end
     while true do
         local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
         local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
@@ -378,7 +384,7 @@ task.spawn(function()
             lastSeedValue = SeedHave
         elseif lastSeedValue then
             timeSinceLastChange = timeSinceLastChange + 1
-            if timeSinceLastChange >= 600 then
+            if timeSinceLastChange >= timedelay then
                 print("No change in SeedHave for 3 minutes: " .. SeedHave)
                 if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
                     ReplicatedStorage.RemoteFunctions.BackToMainLobby:InvokeServer()
