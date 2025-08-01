@@ -140,6 +140,19 @@ local function PlayLose()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
         task.wait(1)
     end
+    if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
+        local args = {
+	        "unit_tomato_plant",
+	        {
+		        Valid = true,
+		        Rotation = 180,
+		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
+	        }
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+        task.wait(1)
+    end
 end
 local function RedeemCode()
     local codes = {"PLAZA", "MYSTERY", "SLIME", "WASTE"}
