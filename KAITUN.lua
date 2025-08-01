@@ -109,6 +109,24 @@ local function ReturnForLobby()
         return false
     end
 end
+
+local function UpgradeU()
+    for i,v in pairs(workspace.Map.Entities:GetChildren()) do
+        if v.name == "unit_pineapple" then
+            if string.format("%.2f",v.OwnedIndicator.Size.X) ~= "0.30" then
+                if (v.OwnedIndicator) then
+                    local args = {
+	                    tonumber(v:GetAttribute("ID"))
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
+                    task.wait(0.3)
+                end
+            end
+            task.wait()
+        end
+    end
+end
+
 local function PlayLose()
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
         local args = {
@@ -153,29 +171,15 @@ local function PlayLose()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
         task.wait(1)
     end
+    if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 500 then
+        UpgradeU()
+    end
 end
 local function RedeemCode()
     local codes = {"PLAZA", "MYSTERY", "SLIME", "WASTE"}
     for _, code in ipairs(codes) do
         local args = { code }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RedeemCode"):InvokeServer(unpack(args))
-    end
-end
-
-local function UpgradeU()
-    for i,v in pairs(workspace.Map.Entities:GetChildren()) do
-        if v.name == "unit_pineapple" then
-            if string.format("%.2f",v.OwnedIndicator.Size.X) ~= "0.30" then
-                if (v.OwnedIndicator) then
-                    local args = {
-	                    tonumber(v:GetAttribute("ID"))
-                    }
-                    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("UpgradeUnit"):InvokeServer(unpack(args))
-                    task.wait(0.3)
-                end
-            end
-            task.wait()
-        end
     end
 end
 local function PlayWin()
