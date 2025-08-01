@@ -112,7 +112,7 @@ end
 
 local function UpgradeU()
     for i,v in pairs(workspace.Map.Entities:GetChildren()) do
-        if v.name == "unit_pineapple" then
+        if v.name == "unit_pineapple" or v.name == "unit_tomato_plant" then
             if string.format("%.2f",v.OwnedIndicator.Size.X) ~= "0.30" then
                 if (v.OwnedIndicator) then
                     local args = {
