@@ -368,7 +368,7 @@ task.spawn(function()
     local Players = game:GetService("Players")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local lastSeedValue, timeSinceLastChange = nil, 0
-    local timedelay = nil
+    local timedelay = 0
     if workspace:GetAttribute("MapId") == "map_farm" then
         timedelay = 500
     else
