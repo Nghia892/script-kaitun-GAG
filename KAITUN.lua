@@ -127,9 +127,9 @@ local function PlayLose()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
-    if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
+    if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
         local args = {
-	        "unit_tomato_plant",
+	        "unit_pineapple",
 	        {
 		        Valid = true,
 		        Rotation = 180,
