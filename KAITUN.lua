@@ -383,6 +383,31 @@ task.spawn(function()
         task.wait(1)
     end
 end)
+
+task.spawn(function()
+    local player = game:GetService("Players").LocalPlayer
+    local gui = player.PlayerGui.GameGui.Screen.Middle.GameEnd
+    local startTime = nil
+
+    while true do
+        if gui.Visible then
+            if not startTime then
+                startTime = os.clock()
+            elseif os.clock() - startTime > 20 then
+                print("GameEnd GUI has been visible for more than 20 seconds! Kicking player...")
+                if game:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
+                    game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+                else
+                    game:shutdown()
+                end
+                startTime = os.clock()
+            end
+        else
+            startTime = nil -- Reset timer when GUI is not visible
+        end
+        task.wait() -- Yield to avoid freezing
+    end
+end)
 task.spawn(function()
     local Players = game:GetService("Players")
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -409,7 +434,7 @@ task.spawn(function()
             if timeSinceLastChange >= timedelay then
                 print("No change in SeedHave for 3 minutes: " .. SeedHave)
                 if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
-                    ReplicatedStorage.RemoteFunctions.BackToMainLobby:InvokeServer()
+                    game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
                 else
                     game:shutdown()
                 end
