@@ -498,6 +498,7 @@ task.spawn(function()
         if game:GetService("CoreGui").RobloxPromptGui.promptOverlay.Active then
             game:shutdown()
         end
+        setfpscap(8)
         task.wait(10)
     end
 end)
