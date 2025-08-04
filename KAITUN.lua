@@ -607,7 +607,7 @@ local function main()
                     game:shutdown()
                 elseif workspace:GetAttribute("MapId") == "map_toxic" and CheckBackPack() then
                     PlayLose()
-                    setfpscap(8)
+                    setfpscap(3)
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
                     PlayLose()
                 end
@@ -618,7 +618,7 @@ local function main()
                     PlayWin()
                 elseif tonumber(Seed) < 2000 and not CheckBackPack() then
                     print('PlayLose')
-                    setfpscap(8)
+                    setfpscap(3)
                     PlayLose()
                 elseif tonumber(Seed) >= 2000 and not CheckBackPack() then
                     game:shutdown()
