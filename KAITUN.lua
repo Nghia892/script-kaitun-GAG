@@ -391,7 +391,7 @@ task.spawn(function()
         if gui.Visible then
             if not startTime then
                 startTime = os.clock()
-            elseif os.clock() - startTime > 30 then
+            elseif os.clock() - startTime > 60 then
                 print("GameEnd GUI has been visible for more than 20 seconds! Kicking player...")
                 if game:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
                     game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
@@ -498,7 +498,7 @@ task.spawn(function()
         if game:GetService("CoreGui").RobloxPromptGui.promptOverlay.Active then
             game:shutdown()
         end
-        setfpscap(8)
+        setfpscap(3)
         task.wait(10)
     end
 end)
