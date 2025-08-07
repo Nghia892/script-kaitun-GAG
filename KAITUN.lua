@@ -394,7 +394,7 @@ task.spawn(function()
             elseif os.clock() - startTime > 60 then
                 print("GameEnd GUI has been visible for more than 20 seconds! Kicking player...")
                 if game:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
-                    game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+                    hopServer()
                 else
                     game:shutdown()
                 end
@@ -432,7 +432,7 @@ task.spawn(function()
             if timeSinceLastChange >= timedelay then
                 print("No change in SeedHave for 3 minutes: " .. SeedHave)
                 if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
-                    game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+                    hopServer()
                 else
                     game:shutdown()
                 end
