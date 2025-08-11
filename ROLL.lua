@@ -24,11 +24,6 @@ local function Roll()
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
 	task.wait(0.5)
-    local args = {
-	    "ub_bee",
-	    10
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
 	-- local args = {
 	--     "ub_classic_v9",
 	--     10
@@ -89,6 +84,7 @@ while true do
 	end
 	_wait(5)
 end
+
 
 
 
