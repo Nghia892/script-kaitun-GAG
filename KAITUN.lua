@@ -149,7 +149,7 @@ local function PlayLose()
 	        "unit_pineapple",
 	        {
 		        Valid = true,
-		        Rotation = 180,
+		        Rotation = 180, 
 		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
 		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
 	        }
@@ -498,7 +498,7 @@ task.spawn(function()
         if game:GetService("CoreGui").RobloxPromptGui.promptOverlay.Active then
             game:shutdown()
         end
-        setfpscap(3)
+        setfpscap(8)
         task.wait(10)
     end
 end)
@@ -607,7 +607,7 @@ local function main()
                     game:shutdown()
                 elseif workspace:GetAttribute("MapId") == "map_toxic" and CheckBackPack() then
                     PlayLose()
-                    setfpscap(3)
+                    setfpscap(8)
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
                     PlayLose()
                 end
@@ -618,7 +618,7 @@ local function main()
                     PlayWin()
                 elseif tonumber(Seed) < 2000 and not CheckBackPack() then
                     print('PlayLose')
-                    setfpscap(3)
+                    setfpscap(8)
                     PlayLose()
                 elseif tonumber(Seed) >= 2000 and not CheckBackPack() then
                     game:shutdown()
