@@ -149,8 +149,8 @@ local function PlayLose()
 	        {
 		        Valid = true,
 		        Rotation = 180, 
-		        CF = CFrame.new(-0.15313172340393066, 0, 15.22225284576416 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-0.15313172340393066, 0, 15.22225284576416)
+		        CF = CFrame.new(-0.15313172340393066+ math.random(1,5), 0, 15.22225284576416+ math.random(1,5) , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-0.15313172340393066+ math.random(1,5), 0, 15.22225284576416+ math.random(1,5))
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
@@ -162,8 +162,8 @@ local function PlayLose()
 	        {
 		        Valid = true,
 		        Rotation = 180,
-		        CF = CFrame.new(-0.15313172340393066, 0, 15.22225284576416 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-0.15313172340393066, 0, 15.22225284576416)
+		        CF = CFrame.new(-0.15313172340393066 + math.random(1,5), 0, 15.22225284576416 + math.random(1,5) , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-0.15313172340393066+ math.random(1,5), 0, 15.22225284576416+ math.random(1,5))
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
