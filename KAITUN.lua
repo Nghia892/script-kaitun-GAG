@@ -535,7 +535,7 @@ local function main()
             game:GetService("ReplicatedStorage").RemoteFunctions.ClientSetFlag:Destroy() 
         end
         while true do
-            game:GetService("RunService"):Set3dRenderingEnabled(true)
+            game:GetService("RunService"):Set3dRenderingEnabled(false)
             RedeemCode()
             setfpscap(8)
             local Have = CheckHave()
@@ -605,7 +605,7 @@ local function main()
             task.wait()
         end
     else
-        game:GetService("RunService"):Set3dRenderingEnabled(true)
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
