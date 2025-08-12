@@ -134,24 +134,23 @@ local function PlayLose()
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(unpack(args))
     end
-    if game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.TickSpeed.Items["2"].ImageColor3 ~= Color3.fromRGB(115, 230, 0) then
-        local args = {
-            2
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
-    end
+    local args = {
+        2
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
+
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
-    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
+    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-0.15313172340393066 + math.random(1,5), 0, 15.22225284576416 + math.random(1,5)))
     if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
         local args = {
 	        "unit_pineapple",
 	        {
 		        Valid = true,
 		        Rotation = 180, 
-		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
+		        CF = CFrame.new(-0.15313172340393066, 0, 15.22225284576416 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-0.15313172340393066, 0, 15.22225284576416)
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
@@ -163,8 +162,8 @@ local function PlayLose()
 	        {
 		        Valid = true,
 		        Rotation = 180,
-		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
+		        CF = CFrame.new(-0.15313172340393066, 0, 15.22225284576416 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-0.15313172340393066, 0, 15.22225284576416)
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
@@ -300,7 +299,7 @@ local function AntiLag()
 end
 local function LowCpu()
     for _, v in pairs(workspace.Map:GetChildren()) do
-        if v.Name ~= "LobbiesFarm" and v.Name ~= "RadioactiveSewer" and v.Name ~= "Model" then
+        if v.Name ~= "LobbiesFarm" and v.Name ~= "RadioactiveSewer" and v.Name ~= "Model" and v.Name ~= "SurvivalLobby" then
             v:Destroy()
         end
     end
@@ -520,7 +519,7 @@ local function main()
             game:GetService("ReplicatedStorage").RemoteFunctions.ClientSetFlag:Destroy() 
         end
         while true do
-            game:GetService("RunService"):Set3dRenderingEnabled(false)
+            game:GetService("RunService"):Set3dRenderingEnabled(true)
             RedeemCode()
             setfpscap(8)
             local Have = CheckHave()
@@ -564,12 +563,12 @@ local function main()
                         end
                     end
                 else
-                    local parttouch = workspace.Map.RadioactiveSewer
+                    local parttouch = workspace.Map.SurvivalLobby
                     for map,world in pairs(parttouch:GetChildren()) do
-                        if world:GetAttribute("MaxPlayers") == 1 then
+                        if world:GetAttribute("MaxPlayers") == 4 then
                             if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
                                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = world.Cage.Part.CFrame
-                                for i = 10, 13 do
+                                for i = 15, 18 do
                                     local args2 = {
 	                                    1
                                     }
@@ -590,7 +589,7 @@ local function main()
             task.wait()
         end
     else
-        game:GetService("RunService"):Set3dRenderingEnabled(false)
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
@@ -605,7 +604,7 @@ local function main()
             if tonumber(Wins.Text) >= 25 then
                 if workspace:GetAttribute("MapId") == "map_farm" then
                     game:shutdown()
-                elseif workspace:GetAttribute("MapId") == "map_toxic" and CheckBackPack() then
+                elseif workspace:GetAttribute("MapId") == "map_dungeon_islands" and CheckBackPack() then
                     PlayLose()
                     setfpscap(8)
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
