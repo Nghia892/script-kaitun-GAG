@@ -138,8 +138,8 @@ local function PlayLose()
         2
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
-
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
+        task.wait(2)
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-0.15313172340393066 + math.random(1,5), 0, 15.22225284576416 + math.random(1,5)))
