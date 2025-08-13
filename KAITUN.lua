@@ -512,6 +512,22 @@ end)
 --         end
 --     end
 -- end)
+local function ClearUnity()
+    task.spawn(
+        function()
+            while true do
+                local entities = workspace.Map.Entities
+                for _, model in pairs(entities:GetChildren()) do
+                    if model:IsA("Model") and string.match(model.Name, "^enemy") then
+                        model:Destroy()
+                    end
+                end
+                task.wait(0.5)
+            end
+        end
+    )
+end
+task.spawn(ClearUnity)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
