@@ -13,7 +13,7 @@ local StartRolls = false
 
 local function Roll()
     local args = {
-	    "ub_lucky_2",
+	    "ub_lucky_1",
 	    10
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
@@ -84,6 +84,7 @@ while true do
 	end
 	_wait(5)
 end
+
 
 
 
