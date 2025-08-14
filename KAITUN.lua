@@ -388,7 +388,7 @@ task.spawn(function()
     local startTime = nil
 
     while true do
-        if gui.Visible then
+        if gui.Visible or game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
             if not startTime then
                 startTime = os.clock()
             elseif os.clock() - startTime > 60 then
