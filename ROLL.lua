@@ -70,14 +70,15 @@ local function StartRoll()
 	end
 end
 
-while true do
-	local Seeds = tostring(player.leaderstats.Seeds.Value)
-	local SeedHave = tonumber(Seeds:match("[kK]") and Seeds:gsub("[kK]", "") * 1000 or Seeds:gsub(",", ""))
-	if SeedHave >= SeedWaitRoll then
-		StartRolls = true
-		StartRoll()
-	end
-	_wait(5)
-end
+-- while true do
+-- 	local Seeds = tostring(player.leaderstats.Seeds.Value)
+-- 	local SeedHave = tonumber(Seeds:match("[kK]") and Seeds:gsub("[kK]", "") * 1000 or Seeds:gsub(",", ""))
+-- 	if SeedHave >= SeedWaitRoll then
+-- 		StartRolls = true
+-- 		StartRoll()
+-- 	end
+-- 	_wait(5)
+-- end
+
 
 
