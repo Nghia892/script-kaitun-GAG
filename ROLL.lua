@@ -1,7 +1,7 @@
-local SeedWaitRoll = 7200
+local SeedWaitRoll = 36000
 local SeedStopRoll = 2700
 local _wait = task.wait
-
+local PlaceId = "c9bb263a-ca18-413f-bf27-3c8be042e186"
 repeat _wait() until game:IsLoaded()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = game:GetService("Players").LocalPlayer
@@ -13,17 +13,16 @@ local StartRolls = false
 
 local function Roll()
     local args = {
-	    "ub_lucky_2",
+	    "ub_lucky_1",
 	    10
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
 	task.wait(0.5)
     local args = {
-	    "ub_lucky_2",
+	    "ub_lucky_1",
 	    10
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
-	task.wait(0.5)
 	-- local args = {
 	--     "ub_classic_v9",
 	--     10
@@ -62,16 +61,21 @@ end
 
 local function StartRoll()
 	while StartRolls do
-		local Seeds = tostring(player.leaderstats.Seeds.Value)
-		local SeedHave = tonumber(Seeds:match("[kK]") and Seeds:gsub("[kK]", "") * 1000 or Seeds:gsub(",", ""))
-		if SeedHave <= SeedStopRoll then
-			StartRolls = false
-			break
-		end
+		if game.JobId == PlaceId then
+		    local Seeds = tostring(player.leaderstats.Seeds.Value)
+		    local SeedHave = tonumber(Seeds:match("[kK]") and Seeds:gsub("[kK]", "") * 1000 or Seeds:gsub(",", ""))
+		    if SeedHave <= SeedStopRoll then
+			    StartRolls = false
+			    break
+		    end
 		
-		Roll()
-		task.spawn(RemoveUnit)
-		_wait(2)
+		    Roll()
+		    task.spawn(RemoveUnit)
+		    _wait(2)
+	    else
+		    game:GetService("TeleportService"):TeleportToPlaceInstance(108533757090220,PlaceId, game.Players.LocalPlayer)
+			task.wait(30)
+		end
 	end
 end
 
@@ -84,49 +88,3 @@ while true do
 	end
 	_wait(5)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
