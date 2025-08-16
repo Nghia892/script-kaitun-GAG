@@ -12,6 +12,11 @@ local deleteRemote = ReplicatedStorage:WaitForChild("RemoteFunctions"):WaitForCh
 local StartRolls = false
 
 local function Roll()
+	local args = {
+	    "unit_buff_carrot"
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitWithSeeds"):InvokeServer(unpack(args))
+	task.wait(1)
     local args = {
 	    "ub_corrupted",
 	    10
