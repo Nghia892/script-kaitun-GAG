@@ -1,5 +1,5 @@
-local SeedWaitRoll = 9000
-local SeedStopRoll = 4500
+local SeedWaitRoll = 7200
+local SeedStopRoll = 2700
 local _wait = task.wait
 
 repeat _wait() until game:IsLoaded()
@@ -19,7 +19,7 @@ local function Roll()
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
 	task.wait(0.5)
     local args = {
-	    "ub_sun",
+	    "ub_bee",
 	    10
     }
     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
@@ -79,6 +79,7 @@ while true do
 	end
 	_wait(5)
 end
+
 
 
 
