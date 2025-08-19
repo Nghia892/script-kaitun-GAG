@@ -389,7 +389,7 @@ task.spawn(function()
         if gui.Visible or game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
             if not startTime then
                 startTime = os.clock()
-            elseif os.clock() - startTime > 60 then
+            elseif os.clock() - startTime > 90 then
                 print("GameEnd GUI has been visible for more than 20 seconds! Kicking player...")
                 if game:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
                     game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
