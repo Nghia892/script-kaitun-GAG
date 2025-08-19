@@ -204,7 +204,18 @@ local function PlayWin()
         end
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.522750854492188, -133.88951110839844 + math.random(-10, 10)))
-    if radishCount < 7 then
+    if radishCount == 0 then
+        local args = {
+            "unit_pineapple",
+            {
+                Valid = true,
+                Rotation = 180,
+                CF = CFrame.new(-329.1172790527344, 62.845054626464844, -131.216552734375),
+                Position = Vector3.new(-329.1172790527344, 62.845054626464844, -131.216552734375)
+            }
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+    elseif radishCount < 7 then
         game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
         local PosList = {
             Vector3.new(-331.9243469238281, 62.845054626464844, -134.27297973632812),
