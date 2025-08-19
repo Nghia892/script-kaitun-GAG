@@ -10,7 +10,7 @@ repeat _wait() until game:GetService("Players").LocalPlayer.PlayerGui.LogicHolde
 local GuiService = game:GetService("GuiService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 GuiService.AutoSelectGuiEnabled = true
--- task.wait(5)
+task.wait(5)
 local Players = game:GetService("Players")
 local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
@@ -33,11 +33,11 @@ local function CheckHave()
     for uniqueId, unitData in pairs(inventory or {}) do
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = Share.GetItem(itemId).Rarity
-        if itemId == "unit_tomato_plant" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
             table.insert(unithave, itemId)
         end
     end
-    if table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -86,7 +86,7 @@ local function ReturnForLobby()
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
         RemoveUnit()
-        if itemId == "unit_tomato_plant" then
+        if itemId == "unit_tomato_plant" or itemId == "unit_pineapple" then
             local args = {
                 tostring(uniqueId),
                 true
@@ -144,14 +144,27 @@ local function PlayLose()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
-    if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
+    if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
+        local args = {
+	        "unit_pineapple",
+	        {
+		        Valid = true,
+		        Rotation = 180, 
+		        CF = CFrame.new(-0.15313172340393066+ math.random(1,5), 0, 15.22225284576416+ math.random(1,5) , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-0.15313172340393066+ math.random(1,5), 0, 15.22225284576416+ math.random(1,5))
+	        }
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+        task.wait(1)
+    end
+    if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
         local args = {
 	        "unit_tomato_plant",
 	        {
 		        Valid = true,
 		        Rotation = 180,
-		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
+		        CF = CFrame.new(-0.15313172340393066 + math.random(1,5), 0, 15.22225284576416 + math.random(1,5) , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+		        Position = vector.create(-0.15313172340393066+ math.random(1,5), 0, 15.22225284576416+ math.random(1,5))
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
@@ -355,7 +368,7 @@ local function AntiAfk2()
     )
 end
 local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
         return true
     else
         return false
