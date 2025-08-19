@@ -199,12 +199,12 @@ local function PlayWin()
     end
     local radishCount = 0
     for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
-        if child.Name == "unit_pineapple" then
+        if child.Name == "unit_tomato_plant" then
             radishCount = radishCount + 1
         end
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.522750854492188, -133.88951110839844 + math.random(-10, 10)))
-    if radishCount < 7 then
+    if radishCount < 20 then
         game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
         local PosList = {
             Vector3.new(-331.8759460449219, 61.68030548095703, -133.99546813964844),
