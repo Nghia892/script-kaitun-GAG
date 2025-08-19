@@ -16,7 +16,7 @@ local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
     while true do
         local SkipGui = game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.AutoSkip
-        if SkipGui.Title.Text ~= "Auto Skip: On" then
+        if SkipGui.Title.Text ~= "Auto Skip: On" and not game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
             GuiService.SelectedObject = SkipGui
             task.wait()
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
@@ -33,11 +33,11 @@ local function CheckHave()
     for uniqueId, unitData in pairs(inventory or {}) do
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = Share.GetItem(itemId).Rarity
-        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_tomato_plant" then
             table.insert(unithave, itemId)
         end
     end
-    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -56,7 +56,7 @@ local function RemoveUnit()
 		local itemId = unitData.ItemData and unitData.ItemData.ID
 		local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
 
-		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or itemId == "unit_pineapple" or rarity.Rarity == "ra_exclusive" then
+		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or rarity.Rarity == "ra_exclusive" then
 			kept[itemId] = true
 			continue
 		end
@@ -86,7 +86,7 @@ local function ReturnForLobby()
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
         RemoveUnit()
-        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_tomato_plant" then
             local args = {
                 tostring(uniqueId),
                 true
@@ -103,7 +103,7 @@ local function ReturnForLobby()
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
         end
     end
-    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -112,7 +112,7 @@ end
 
 local function UpgradeU()
     for i,v in pairs(workspace.Map.Entities:GetChildren()) do
-        if v.name == "unit_pineapple" or v.name == "unit_tomato_plant" then
+        if v.name == "unit_tomato_plant" then
             if string.format("%.2f",v.OwnedIndicator.Size.X) ~= "0.30" then
                 if (v.OwnedIndicator) then
                     local args = {
@@ -144,20 +144,7 @@ local function PlayLose()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
-    if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
-        local args = {
-	        "unit_pineapple",
-	        {
-		        Valid = true,
-		        Rotation = 180, 
-		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
-	        }
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
-        task.wait(1)
-    end
-    if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
+    if not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
         local args = {
 	        "unit_tomato_plant",
 	        {
@@ -199,29 +186,41 @@ local function PlayWin()
     end
     local radishCount = 0
     for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
-        if child.Name == "unit_pineapple" then
+        if child.Name == "unit_tomato_plant" then
             radishCount = radishCount + 1
         end
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.522750854492188, -133.88951110839844 + math.random(-10, 10)))
-    if radishCount < 7 then
+    if radishCount < 20 then
         game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-331.64239501953125 + math.random(-10, 10), 62.703956604003906, -133.88951110839844 + math.random(-10, 10)))
         local PosList = {
-            Vector3.new(-331.9243469238281, 62.845054626464844, -134.27297973632812),
-            Vector3.new(-329.5567626953125, 62.845054626464844, -134.15237426757812),
-            Vector3.new(-332.0066833496094, 62.845054626464844, -130.7923583984375),
-            Vector3.new(-325.93145751953125, 62.845054626464844, -133.91928100585938),
-            Vector3.new(-332.1609802246094, 62.845054626464844, -128.2115936279297),
-            Vector3.new(-329.1172790527344, 62.845054626464844, -131.216552734375),
-            Vector3.new(-327.5411376953125, 62.845054626464844, -145.2104034423828),
-            Vector3.new(-324.3938903808594, 62.845054626464844, -146.91738891601562),
-            Vector3.new(-321.1422119140625, 62.845054626464844, -147.17340087890625),
-        }
+    Vector3.new(-331.8759460449219, 61.68030548095703, -133.99546813964844),
+    Vector3.new(-332.016123533156, 61.68030548095703, -134.5545200157285),
+    Vector3.new(-332.3565999003606, 61.68030548095703, -128.5559697558592),
+    Vector3.new(-332.2016925112094, 61.68030548095703, -127.094663829623),
+    Vector3.new(-332.2054676047219, 61.68030548095703, -122.0740662109938),
+    Vector3.new(-332.9232448526259, 61.68030548095703, -123.2687144832766),
+    Vector3.new(-325.8667907714844, 61.68030548095703, -134.03594970703125),
+    Vector3.new(-328.054382926495, 61.68030548095703, -130.1342447262252),
+    Vector3.new(-338.61767578125, 61.68030548095703, -138.088214111328),
+    Vector3.new(-338.882080078125, 61.68030548095703, -135.490478515625),
+    Vector3.new(-338.56524658203125, 61.68030548095703, -132.91220092773438),
+    Vector3.new(-338.749267578125, 61.68030548095703, -130.12046813964844),
+    Vector3.new(-338.684765625, 61.68030548095703, -126.75885772705078),
+    Vector3.new(-338.406538055394, 61.68030548095703, -123.78707122802734),
+    Vector3.new(-330.932601235, 61.68030548095703, -134.55035400390625),
+    Vector3.new(-330.5810546875, 61.68030548095703, -140.61495971679688),
+    Vector3.new(-335.964074589844, 61.68030548095703, -136.7258875720215),
+    Vector3.new(-333.433417769375, 61.68030548095703, -140.59902954101562),
+    Vector3.new(-327.9202575683594, 61.68030548095703, -140.52308274875),
+    Vector3.new(-325.2404479980469, 61.68030548095703, -140.63665771484375)
+}
+
         local pos = PosList[math.random(1, #PosList)]
         print('LAY')
-        if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 300 then
+        if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 100 then
             local args = {
-                "unit_pineapple",
+                "unit_tomato_plant",
                 {
                     Valid = true,
                     Rotation = 180,
@@ -231,10 +230,9 @@ local function PlayWin()
             }
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
         end
-    else
-        if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 500 then
-            UpgradeU()
-        end
+    end
+    if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 125 then
+        UpgradeU()
     end
 end
 
@@ -357,7 +355,7 @@ local function AntiAfk2()
     )
 end
 local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
         return true
     else
         return false
@@ -606,7 +604,7 @@ local function main()
             task.wait()
         end
     else
-        game:GetService("RunService"):Set3dRenderingEnabled(false)
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
