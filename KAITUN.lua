@@ -604,7 +604,7 @@ local function main()
             task.wait()
         end
     else
-        game:GetService("RunService"):Set3dRenderingEnabled(true)
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
         task.spawn(AutoSkip)
         task.spawn(AntiLag)
         AntiAfk2()
