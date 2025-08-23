@@ -16,7 +16,7 @@ local VirtualUser = game:GetService("VirtualUser")
 local function AutoSkip()
     while true do
         local SkipGui = game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.AutoSkip
-        if SkipGui.Title.Text ~= "Auto Skip: On" then
+        if SkipGui.Title.Text ~= "Auto Skip: On" and not game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
             GuiService.SelectedObject = SkipGui
             task.wait()
             VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
@@ -130,7 +130,7 @@ end
 local function PlayLose()
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
         local args = {
-            "dif_impossible"
+            "dif_hard"
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(unpack(args))
     end
@@ -144,35 +144,51 @@ local function PlayLose()
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
     game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
-    if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
-        local args = {
-	        "unit_pineapple",
-	        {
-		        Valid = true,
-		        Rotation = 180, 
-		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
-	        }
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
-        task.wait(1)
+    -- if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
+    --     local args = {
+	--         "unit_pineapple",
+	--         {
+	-- 	        Valid = true,
+	-- 	        Rotation = 180, 
+	-- 	        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
+	-- 	        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
+	--         }
+    --     }
+    --     game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+    --     task.wait(1)
+    -- end
+    local PosTomato = {
+        Vector3.new(-845.7227783203125, 61.93030548095703, -144.72146606445312),
+        Vector3.new(-848.307861328125, 61.93030548095703, -144.35543823242188),
+        Vector3.new(-850.9990844726562, 61.93030548095703, -144.6051788330078),
+        Vector3.new(-853.8358764648438, 61.93030548095703, -144.49789428710938),
+        Vector3.new(-856.7615966796875, 61.93030548095703, -144.4781951904297),
+    }
+    local radishCount = 0
+    for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
+        if child.Name == "unit_tomato_plant" then
+            radishCount = radishCount + 1
+        end
     end
-    if not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and not workspace.Map.Entities:FindFirstChild("unit_tomato_plant") then
+    if radishCount < 5 then
+        for i,v in pairs(PosTomato) do
         local args = {
 	        "unit_tomato_plant",
 	        {
 		        Valid = true,
 		        Rotation = 180,
-		        CF = CFrame.new(-1.561105728149414 , 3.16474986076355, 309.8352355957031 , -1, 0, -8.742277657347586e-08, 0, 1, 0, 8.742277657347586e-08, 0, -1),
-		        Position = vector.create(-1.561105728149414, 3.16474986076355, 309.8352355957031)
+		        CF = CFrame.new(v),
+		        Position = v
 	        }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+        end
         task.wait(1)
     end
-    if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 500 then
+    if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 125 then
         UpgradeU()
     end
+    task.wait()
 end
 local function RedeemCode()
     local codes = {"PLAZA", "MYSTERY", "SLIME", "WASTE"}
@@ -310,7 +326,7 @@ local function AntiLag()
 end
 local function LowCpu()
     for _, v in pairs(workspace.Map:GetChildren()) do
-        if v.Name ~= "LobbiesFarm" and v.Name ~= "RadioactiveSewer" and v.Name ~= "Model" then
+        if v.Name ~= "LobbiesFarm" and v.Name ~= "BackGarden" and v.Name ~= "Model" then
             v:Destroy()
         end
     end
@@ -424,7 +440,7 @@ task.spawn(function()
     if workspace:GetAttribute("MapId") == "map_farm" then
         timedelay = 500
     else
-        timedelay = 200
+        timedelay = 500
     end
     while true do
         local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
@@ -589,12 +605,12 @@ local function main()
                         end
                     end
                 else
-                    local parttouch = workspace.Map.RadioactiveSewer
+                    local parttouch = workspace.Map.BackGarden
                     for map,world in pairs(parttouch:GetChildren()) do
                         if world:GetAttribute("MaxPlayers") == 1 then
                             if isAnyPlayerNearby(maxDistance, world.Cage.Part.CFrame) then
                                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = world.Cage.Part.CFrame
-                                for i = 10, 13 do
+                                for i = 14, 18 do
                                     local args2 = {
 	                                    1
                                     }
@@ -630,7 +646,7 @@ local function main()
             if tonumber(Wins.Text) >= 25 then
                 if workspace:GetAttribute("MapId") == "map_farm" then
                     game:shutdown()
-                elseif workspace:GetAttribute("MapId") == "map_toxic" and CheckBackPack() then
+                elseif workspace:GetAttribute("MapId") == "map_back_garden" and CheckBackPack() then
                     PlayLose()
                     setfpscap(8)
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
