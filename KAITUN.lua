@@ -483,7 +483,7 @@ task.spawn(function()
             local Have = CheckHave()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-            if (not Have and tonumber(SeedHave) > 2000) then
+            if (not Have and tonumber(SeedHave) > 4000) then
                 print('Nothinh')
             else
                 task.wait(300)
