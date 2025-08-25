@@ -197,6 +197,27 @@ local step3 = false
 local step4 = false
 local step5 = false
 local step6 = false
+local time = 0
+local lastTime = os.time() -- Lưu thời điểm bắt đầu
+
+local function TimeCheck()
+    local GameGui = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("GameGui")
+    local DifficultyVote = GameGui.Screen.Middle.DifficultyVote
+
+    while true do
+        if DifficultyVote.Visible then
+            time = 0 -- Đặt lại thời gian
+            lastTime = os.time() -- Cập nhật thời điểm bắt đầu
+        else
+            local currentTime = os.time()
+            time = currentTime - lastTime -- Tính thời gian trôi qua
+        end
+        print("Thời gian trôi qua: " .. time .. " giây")
+        wait(1) -- Vẫn giữ wait(1) để tránh CPU overload
+    end
+end
+
+task.spawn(TimeCheck)
 
 local function PlayLose2()
     local function calculateTotalSeconds()
@@ -240,12 +261,6 @@ local function PlayLose2()
     end
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
-    end
-    local time = 0
-    if calculateTotalSeconds() > 3000 then
-       time = 0
-    else
-        time = calculateTotalSeconds()
     end
     if time == 0 then
         step1 = false
@@ -496,30 +511,30 @@ end
 --     end
 -- end)
 
-task.spawn(function()
-    local player = game:GetService("Players").LocalPlayer
-    local gui = player.PlayerGui.GameGui.Screen.Middle.GameEnd
-    local startTime = nil
+-- task.spawn(function()
+--     local player = game:GetService("Players").LocalPlayer
+--     local gui = player.PlayerGui.GameGui.Screen.Middle.GameEnd
+--     local startTime = nil
 
-    while true do
-        if gui.Visible or game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
-            if not startTime then
-                startTime = os.clock()
-            elseif os.clock() - startTime > 60 then
-                print("GameEnd GUI has been visible for more than 20 seconds! Kicking player...")
-                if game:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
-                    game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
-                else
-                    game:shutdown()
-                end
-                startTime = os.clock()
-            end
-        else
-            startTime = nil -- Reset timer when GUI is not visible
-        end
-        task.wait() -- Yield to avoid freezing
-    end
-end)
+--     while true do
+--         if gui.Visible or game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
+--             if not startTime then
+--                 startTime = os.clock()
+--             elseif os.clock() - startTime > 60 then
+--                 print("GameEnd GUI has been visible for more than 20 seconds! Kicking player...")
+--                 if game:GetService("ReplicatedStorage"):FindFirstChild("RemoteFunctions") then
+--                     game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+--                 else
+--                     game:shutdown()
+--                 end
+--                 startTime = os.clock()
+--             end
+--         else
+--             startTime = nil -- Reset timer when GUI is not visible
+--         end
+--         task.wait() -- Yield to avoid freezing
+--     end
+-- end)
 -- task.spawn(function()
 --     local Players = game:GetService("Players")
 --     local ReplicatedStorage = game:GetService("ReplicatedStorage")
