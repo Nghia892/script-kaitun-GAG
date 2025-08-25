@@ -220,19 +220,19 @@ end
 task.spawn(TimeCheck)
 
 local function PlayLose2()
-    local function calculateTotalSeconds()
-        local timeLabel = game:GetService("Players").LocalPlayer.PlayerGui.TopbarStandard.Holders.Right:GetChildren()[3].IconButton.Menu.IconSpot.Contents.IconLabelContainer.IconLabel.Text
-        local cleanTimeString = timeLabel:gsub("⏱️%s*", "")
+    -- local function calculateTotalSeconds()
+    --     local timeLabel = game:GetService("Players").LocalPlayer.PlayerGui.TopbarStandard.Holders.Right:GetChildren()[3].IconButton.Menu.IconSpot.Contents.IconLabelContainer.IconLabel.Text
+    --     local cleanTimeString = timeLabel:gsub("⏱️%s*", "")
 
-        if cleanTimeString:match("^%d+$") then
-            return tonumber(cleanTimeString) or 0
-        end
-        local minutes, seconds = cleanTimeString:match("(%d+):(%d+)")
-        if minutes and seconds then
-            return (tonumber(minutes) or 0) * 60 + (tonumber(seconds) or 0)
-        end
-        return 0
-    end
+    --     if cleanTimeString:match("^%d+$") then
+    --         return tonumber(cleanTimeString) or 0
+    --     end
+    --     local minutes, seconds = cleanTimeString:match("(%d+):(%d+)")
+    --     if minutes and seconds then
+    --         return (tonumber(minutes) or 0) * 60 + (tonumber(seconds) or 0)
+    --     end
+    --     return 0
+    -- end
     local function FireLawn()
         local args = {
 	        "unit_lawnmower",
