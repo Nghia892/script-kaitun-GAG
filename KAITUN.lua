@@ -592,11 +592,13 @@ local function Roll()
             StartRolls = false
             break
         end
-        local args = {
+        for i = 1,5 do
+            local args = {
 	        "ub_tropical",
 	        1
         }
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
+        end
         local args = {
             "ub_classic_v4",
             1
@@ -729,6 +731,9 @@ local function main()
         task.spawn(AntiLag)
         AntiAfk2()
         while true do
+            local Have = CheckHave()
+            local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
+            local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
             if (not Have and tonumber(SeedHave) > 4000) then
                 StartRolls = true
                 Roll()
