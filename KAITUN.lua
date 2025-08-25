@@ -520,44 +520,44 @@ task.spawn(function()
         task.wait() -- Yield to avoid freezing
     end
 end)
-task.spawn(function()
-    local Players = game:GetService("Players")
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local lastSeedValue, timeSinceLastChange = nil, 0
-    local timedelay = 0
-    if workspace:GetAttribute("MapId") == "map_farm" then
-        timedelay = 500
-    else
-        timedelay = 500
-    end
-    while true do
-        local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
-        local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-        SeedHave = tonumber(SeedHave)
+-- task.spawn(function()
+--     local Players = game:GetService("Players")
+--     local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--     local lastSeedValue, timeSinceLastChange = nil, 0
+--     local timedelay = 0
+--     if workspace:GetAttribute("MapId") == "map_farm" then
+--         timedelay = 500
+--     else
+--         timedelay = 500
+--     end
+--     while true do
+--         local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
+--         local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+--         SeedHave = tonumber(SeedHave)
 
-        if lastSeedValue and SeedHave ~= lastSeedValue then
-            timeSinceLastChange = 0
-            lastSeedValue = SeedHave
-        elseif lastSeedValue then
-            timeSinceLastChange = timeSinceLastChange + 1
-            if timeSinceLastChange >= timedelay + 30 then
-                game:shutdown()
-            end
-            if timeSinceLastChange >= timedelay then
-                print("No change in SeedHave for 3 minutes: " .. SeedHave)
-                if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
-                    game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
-                else
-                    game:shutdown()
-                end
-                timeSinceLastChange = 0
-            end
-        else
-            lastSeedValue = SeedHave
-        end
-        task.wait(1)
-    end
-end)
+--         if lastSeedValue and SeedHave ~= lastSeedValue then
+--             timeSinceLastChange = 0
+--             lastSeedValue = SeedHave
+--         elseif lastSeedValue then
+--             timeSinceLastChange = timeSinceLastChange + 1
+--             if timeSinceLastChange >= timedelay + 30 then
+--                 game:shutdown()
+--             end
+--             if timeSinceLastChange >= timedelay then
+--                 print("No change in SeedHave for 3 minutes: " .. SeedHave)
+--                 if ReplicatedStorage:FindFirstChild("RemoteFunctions") then
+--                     game:GetService("ReplicatedStorage").RemoteFunctions.BackToMainLobby:InvokeServer()
+--                 else
+--                     game:shutdown()
+--                 end
+--                 timeSinceLastChange = 0
+--             end
+--         else
+--             lastSeedValue = SeedHave
+--         end
+--         task.wait(1)
+--     end
+-- end)
 local function CheckAnotherPlayer()
     local Players = game:GetService("Players")
     for _, player in pairs(Players:GetPlayers()) do
