@@ -33,11 +33,11 @@ local function CheckHave()
     for uniqueId, unitData in pairs(inventory or {}) do
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = Share.GetItem(itemId).Rarity
-        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" or itemId == "unit_lawnmower" then
             table.insert(unithave, itemId)
         end
     end
-    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") and table.find(unithave, "unit_lawnmower") then
         return true
     else
         return false
@@ -86,7 +86,7 @@ local function ReturnForLobby()
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
         RemoveUnit()
-        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" or itemId == "unit_lawnmower" then
             local args = {
                 tostring(uniqueId),
                 true
@@ -103,7 +103,7 @@ local function ReturnForLobby()
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
         end
     end
-    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") and table.find(unithave, "unit_lawnmower") then
         return true
     else
         return false
@@ -143,7 +143,7 @@ local function PlayLose()
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
-    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
+    
     -- if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
     --     local args = {
 	--         "unit_pineapple",
@@ -164,6 +164,7 @@ local function PlayLose()
         Vector3.new(-853.8358764648438, 61.93030548095703, -144.49789428710938),
         Vector3.new(-856.7615966796875, 61.93030548095703, -144.4781951904297),
     }
+    print('1')
     local radishCount = 0
     for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
         if child.Name == "unit_tomato_plant" then
@@ -187,6 +188,93 @@ local function PlayLose()
     end
     if game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 125 then
         UpgradeU()
+    end
+    task.wait()
+end
+local step1 = false
+local step2 = false
+local step3 = false
+local step4 = false
+local step5 = false
+local step6 = false
+
+local function PlayLose2()
+    local function calculateTotalSeconds()
+        local timeLabel = game:GetService("Players").LocalPlayer.PlayerGui.TopbarStandard.Holders.Right:GetChildren()[3].IconButton.Menu.IconSpot.Contents.IconLabelContainer.IconLabel.Text
+        local cleanTimeString = timeLabel:gsub("⏱️%s*", "")
+
+        if cleanTimeString:match("^%d+$") then
+            return tonumber(cleanTimeString) or 0
+        end
+        local minutes, seconds = cleanTimeString:match("(%d+):(%d+)")
+        if minutes and seconds then
+            return (tonumber(minutes) or 0) * 60 + (tonumber(seconds) or 0)
+        end
+        return 0
+    end
+    local function FireLawn()
+        local args = {
+	        "unit_lawnmower",
+	        {
+		        Valid = true,
+		        PathIndex = 1,
+		        Position = vector.create(-907.3809814453125, 62.18030548095703, -123.05203247070312),
+		        DistanceAlongPath = 296.2500286102295,
+		        Rotation = 180,
+		        CF = CFrame.new(-907.3809814453125, 62.18030548095703, -123.05203247070312, -0, -0, -1, -0, 1, -0, 1, 0, -0)
+	        }
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
+        local args = {
+            "dif_impossible"
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.TickSpeed.Items["2"].ImageColor3 ~= Color3.fromRGB(115, 230, 0) then
+        local args = {
+            2
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
+    end
+    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
+    end
+    local time = 0
+    if calculateTotalSeconds() > 3000 then
+       time = 0
+    else
+        time = calculateTotalSeconds()
+    end
+    if time == 0 then
+        step1 = false
+        step2 = false
+        step3 = false
+        step4 = false
+        step5 = false
+        step6 = false
+    end
+    if time > 21 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
+        FireLawn()
+        step1 = true
+    elseif time > 38 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
+        FireLawn()
+        step2 = true
+    elseif time > 48 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
+        FireLawn()
+        step3 = true
+    elseif time > 63 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step4 then
+        step4 = true
+        FireLawn()
+    elseif time > 76 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step5 then
+        step5 = true
+        FireLawn()
+    elseif time > 79 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step6 then
+        step6 = true
+        FireLawn()
+    elseif time > 90 then
+        FireLawn()
     end
     task.wait()
 end
@@ -383,7 +471,7 @@ local function AntiAfk2()
     )
 end
 local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Lawnmower") then
         return true
     else
         return false
@@ -505,6 +593,11 @@ local function Roll()
             break
         end
         local args = {
+	        "ub_tropical",
+	        1
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
+        local args = {
             "ub_classic_v4",
             1
         }
@@ -568,18 +661,18 @@ local function main()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
             local maxDistance = 7 -- Khoảng cách tối đa (studs)
-            if (not Have and tonumber(SeedHave) > 400) then
+            if (not Have and tonumber(SeedHave) > 4000) then
                 StartRolls = true
                 Roll()
             elseif Have and not CheckBackPack() then
                 ReturnForLobby()
-            elseif Have or tonumber(SeedHave) < 400 then
+            elseif Have or tonumber(SeedHave) < 4000 then
                 local args = {
                     "unique_1",
                     true
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
-                if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
+                if tonumber(Wins.Text) < 25 then
                     local parttouch = workspace.Map.LobbiesFarm
                     for map,world in pairs(parttouch:GetChildren()) do
                         if world:GetAttribute("MaxPlayers") == 1 then
@@ -647,22 +740,18 @@ local function main()
                 if workspace:GetAttribute("MapId") == "map_farm" then
                     game:shutdown()
                 elseif workspace:GetAttribute("MapId") == "map_back_garden" and CheckBackPack() then
-                    PlayLose()
+                    PlayLose2()
                     setfpscap(8)
+                elseif workspace:GetAttribute("MapId") == "map_back_garden" then
+                    PlayLose()
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
                     PlayLose()
                 end
             else
-                if workspace:GetAttribute("MapId") == "map_farm" and CheckBackPack() and tonumber(Wins.Text) < 25 then
+                if workspace:GetAttribute("MapId") == "map_farm" and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and tonumber(Wins.Text) < 25 then
                     print('PlayWin')
                     setfpscap(15)
                     PlayWin()
-                elseif tonumber(Seed) < 2000 and not CheckBackPack() then
-                    print('PlayLose')
-                    setfpscap(8)
-                    PlayLose()
-                elseif tonumber(Seed) >= 2000 and not CheckBackPack() then
-                    game:shutdown()
                 elseif tonumber(Wins.Text) >= 25 then
                     game:shutdown()
                 end
