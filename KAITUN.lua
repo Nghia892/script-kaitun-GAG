@@ -477,24 +477,24 @@ local function CheckBackPack()
         return false
     end
 end
-task.spawn(function()
-    while true do
-        if game.PlaceId == 108533757090220 then
-            local Have = CheckHave()
-            local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
-            local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-            if (not Have and tonumber(SeedHave) > 4000) then
-                print('Nothinh')
-            else
-                task.wait(300)
-                hopServer()
-            end
-        else
-            break
-        end
-        task.wait(1)
-    end
-end)
+-- task.spawn(function()
+--     while true do
+--         if game.PlaceId == 108533757090220 then
+--             local Have = CheckHave()
+--             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
+--             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+--             if (not Have and tonumber(SeedHave) > 4000) then
+--                 print('Nothinh')
+--             else
+--                 task.wait(300)
+--                 hopServer()
+--             end
+--         else
+--             break
+--         end
+--         task.wait(1)
+--     end
+-- end)
 
 task.spawn(function()
     local player = game:GetService("Players").LocalPlayer
@@ -729,6 +729,12 @@ local function main()
         task.spawn(AntiLag)
         AntiAfk2()
         while true do
+            if (not Have and tonumber(SeedHave) > 4000) then
+                StartRolls = true
+                Roll()
+            elseif Have and not CheckBackPack() then
+                ReturnForLobby()
+            end
             if CheckAnotherPlayer() then
                 print('Have another player')
                 game:shutdown()
