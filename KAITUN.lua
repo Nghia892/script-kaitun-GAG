@@ -268,7 +268,7 @@ local function PlayLose2()
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
-    if time > 20 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
+    if time > 23 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
         FireLawn()
         step1 = true
     elseif time > 39 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
