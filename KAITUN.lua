@@ -211,6 +211,12 @@ local function TimeCheck()
         if DifficultyVote.Visible then
             time = 0
             lastVoteVisible = true
+            step1 = false
+            step2 = false
+            step3 = false
+            step4 = false
+            step5 = false
+            step6 = false
         else
             if lastVoteVisible then
                 lastVoteVisible = false
