@@ -543,7 +543,7 @@ task.spawn(function()
     if workspace:GetAttribute("MapId") == "map_farm" then
         timedelay = 500
     else
-        timedelay = 500
+        timedelay = 700
     end
     while true do
         local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
