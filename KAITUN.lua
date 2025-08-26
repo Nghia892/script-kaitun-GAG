@@ -270,22 +270,22 @@ local function PlayLose2()
         step5 = false
         step6 = false
     end
-    if time > 21 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
+    if time > 22 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
         FireLawn()
         step1 = true
-    elseif time > 40 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
+    elseif time > 41 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
         FireLawn()
         step2 = true
     elseif time > 50 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
         FireLawn()
         step3 = true
-    elseif time > 63 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step4 then
+    elseif time > 62 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step4 then
         step4 = true
         FireLawn()
-    elseif time > 76 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step5 then
+    elseif time > 78 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step5 then
         step5 = true
         FireLawn()
-    elseif time > 79 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step6 then
+    elseif time > 82 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step6 then
         step6 = true
         FireLawn()
     elseif time > 90 then
@@ -661,7 +661,7 @@ local function ClearUnity()
         end
     )
 end
-task.spawn(ClearUnity)
+-- task.spawn(ClearUnity)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
@@ -766,7 +766,7 @@ local function main()
                     game:shutdown()
                 elseif workspace:GetAttribute("MapId") == "map_back_garden" and CheckBackPack() then
                     PlayLose2()
-                    setfpscap(8)
+                    setfpscap(15)
                 elseif workspace:GetAttribute("MapId") == "map_back_garden" then
                     PlayLose()
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
