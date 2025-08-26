@@ -271,10 +271,10 @@ local function PlayLose2()
     if time > 23 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
         FireLawn()
         step1 = true
-    elseif time > 39 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
+    elseif time > 41 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
         FireLawn()
         step2 = true
-    elseif time > 49 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
+    elseif time > 51 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
         FireLawn()
         step3 = true
     elseif time > 62 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step4 then
