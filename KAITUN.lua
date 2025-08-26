@@ -33,11 +33,11 @@ local function CheckHave()
     for uniqueId, unitData in pairs(inventory or {}) do
         local itemId = unitData.ItemData and unitData.ItemData.ID
         local rarity = Share.GetItem(itemId).Rarity
-        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" or itemId == "unit_lawnmower" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
             table.insert(unithave, itemId)
         end
     end
-    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") and table.find(unithave, "unit_lawnmower") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -56,7 +56,7 @@ local function RemoveUnit()
 		local itemId = unitData.ItemData and unitData.ItemData.ID
 		local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
 
-		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or itemId == "unit_pineapple" or rarity.Rarity == "ra_exclusive" or itemId == "unit_lawnmower" then
+		if rarity.Rarity == "ra_godly" or itemId == "unit_tomato_plant" or itemId == "unit_pineapple" or rarity.Rarity == "ra_exclusive" then
 			kept[itemId] = true
 			continue
 		end
@@ -86,7 +86,7 @@ local function ReturnForLobby()
         local rarity = require(game:GetService("Players").LocalPlayer.PlayerGui.LogicHolder.ClientLoader.SharedConfig.ItemData.Units.Configs:FindFirstChild(itemId))
         print(uniqueId, itemId)
         RemoveUnit()
-        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" or itemId == "unit_lawnmower" then
+        if itemId == "unit_pineapple" or itemId == "unit_tomato_plant" then
             local args = {
                 tostring(uniqueId),
                 true
@@ -103,7 +103,7 @@ local function ReturnForLobby()
             game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
         end
     end
-    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") and table.find(unithave, "unit_lawnmower") then
+    if table.find(unithave, "unit_pineapple") and table.find(unithave, "unit_tomato_plant") then
         return true
     else
         return false
@@ -143,7 +143,7 @@ local function PlayLose()
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
     end
-    
+    game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(-1.561105728149414 + math.random(-10, 10), 3.16474986076355, 309.835235595703 + math.random(-10, 10)))
     -- if not workspace.Map.Entities:FindFirstChild("unit_pineapple") then
     --     local args = {
 	--         "unit_pineapple",
@@ -164,7 +164,6 @@ local function PlayLose()
         Vector3.new(-853.8358764648438, 61.93030548095703, -144.49789428710938),
         Vector3.new(-856.7615966796875, 61.93030548095703, -144.4781951904297),
     }
-    print('1')
     local radishCount = 0
     for _, child in ipairs(workspace.Map.Entities:GetChildren()) do
         if child.Name == "unit_tomato_plant" then
@@ -190,97 +189,6 @@ local function PlayLose()
         UpgradeU()
     end
     task.wait()
-end
-local step1 = false
-local step2 = false
-local step3 = false
-local step4 = false
-local step5 = false
-local step6 = false
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-
-local time = 0
-local lastVoteVisible = false
-
-local function TimeCheck()
-    local GameGui = Players.LocalPlayer.PlayerGui:WaitForChild("GameGui")
-    local DifficultyVote = GameGui.Screen.Middle.DifficultyVote
-
-    RunService.Heartbeat:Connect(function(deltaTime)
-        if DifficultyVote.Visible then
-            time = 0
-            lastVoteVisible = true
-            step1 = false
-            step2 = false
-            step3 = false
-            step4 = false
-            step5 = false
-            step6 = false
-        else
-            if lastVoteVisible then
-                lastVoteVisible = false
-            else
-                time = time + deltaTime -- Tăng thời gian dựa trên deltaTime
-            end
-        end
-        print("Thời gian trôi qua: " .. math.floor(time) .. " giây")
-    end)
-end
-
-task.spawn(TimeCheck)
-
-local function PlayLose2()
-    local function FireLawn()
-        local args = {
-            "unit_lawnmower",
-            {
-                Valid = true,
-                PathIndex = 1,
-                Position = vector.create(-907.3809814453125, 62.18030548095703, -123.05203247070312),
-                DistanceAlongPath = 296.2500286102295,
-                Rotation = 180,
-                CF = CFrame.new(-907.3809814453125, 62.18030548095703, -123.05203247070312, -0, -0, -1, -0, 1, -0, 1, 0, -0)
-            }
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
-    end
-
-    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.DifficultyVote.Visible then
-        local args = { "dif_impossible" }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("PlaceDifficultyVote"):InvokeServer(unpack(args))
-    end
-
-    if game:GetService("Players").LocalPlayer.PlayerGui.GameGuiNoInset.Screen.Top.WaveControls.TickSpeed.Items["2"].ImageColor3 ~= Color3.fromRGB(115, 230, 0) then
-        local args = { 2 }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("ChangeTickSpeed"):InvokeServer(unpack(args))
-    end
-
-    if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
-    end
-
-    if time > 90 then
-        FireLawn()
-    elseif time > 80 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step6 then
-        step6 = true
-        FireLawn()
-    elseif time > 78 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step5 then
-        step5 = true
-        FireLawn()
-    elseif time > 62 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step4 then
-        step4 = true
-        FireLawn()
-    elseif time > 51 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
-        step3 = true
-        FireLawn()
-    elseif time > 41 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
-        step2 = true
-        FireLawn()
-    elseif time > 23 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
-        step1 = true
-        FireLawn()
-    end
 end
 local function RedeemCode()
     local codes = {"PLAZA", "MYSTERY", "SLIME", "WASTE"}
@@ -475,30 +383,30 @@ local function AntiAfk2()
     )
 end
 local function CheckBackPack()
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Lawnmower") then
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Pineapple Cannon") and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
         return true
     else
         return false
     end
 end
--- task.spawn(function()
---     while true do
---         if game.PlaceId == 108533757090220 then
---             local Have = CheckHave()
---             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
---             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
---             if (not Have and tonumber(SeedHave) > 4000) then
---                 print('Nothinh')
---             else
---                 task.wait(300)
---                 hopServer()
---             end
---         else
---             break
---         end
---         task.wait(1)
---     end
--- end)
+task.spawn(function()
+    while true do
+        if game.PlaceId == 108533757090220 then
+            local Have = CheckHave()
+            local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
+            local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
+            if (not Have and tonumber(SeedHave) > 2000) then
+                print('Nothinh')
+            else
+                task.wait(300)
+                hopServer()
+            end
+        else
+            break
+        end
+        task.wait(1)
+    end
+end)
 
 task.spawn(function()
     local player = game:GetService("Players").LocalPlayer
@@ -532,7 +440,7 @@ task.spawn(function()
     if workspace:GetAttribute("MapId") == "map_farm" then
         timedelay = 500
     else
-        timedelay = 700
+        timedelay = 500
     end
     while true do
         local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
@@ -596,13 +504,6 @@ local function Roll()
             StartRolls = false
             break
         end
-        for i = 1,5 do
-            local args = {
-	        "ub_tropical",
-	        1
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("BuyUnitBox"):InvokeServer(unpack(args))
-        end
         local args = {
             "ub_classic_v4",
             1
@@ -651,7 +552,7 @@ local function ClearUnity()
         end
     )
 end
--- task.spawn(ClearUnity)
+task.spawn(ClearUnity)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
@@ -667,18 +568,18 @@ local function main()
             local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
             local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
             local maxDistance = 7 -- Khoảng cách tối đa (studs)
-            if (not Have and tonumber(SeedHave) > 4000) then
+            if (not Have and tonumber(SeedHave) > 400) then
                 StartRolls = true
                 Roll()
             elseif Have and not CheckBackPack() then
                 ReturnForLobby()
-            elseif Have or tonumber(SeedHave) < 4000 then
+            elseif Have or tonumber(SeedHave) < 400 then
                 local args = {
                     "unique_1",
                     true
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("SetUnitEquipped"):InvokeServer(unpack(args))
-                if tonumber(Wins.Text) < 25 then
+                if tonumber(Wins.Text) < 25 and Have and CheckBackPack() then
                     local parttouch = workspace.Map.LobbiesFarm
                     for map,world in pairs(parttouch:GetChildren()) do
                         if world:GetAttribute("MaxPlayers") == 1 then
@@ -735,15 +636,6 @@ local function main()
         task.spawn(AntiLag)
         AntiAfk2()
         while true do
-            local Have = CheckHave()
-            local Seeds = tostring(game:GetService("Players").LocalPlayer.leaderstats.Seeds.Value)
-            local SeedHave = Seeds:find("[Kk]") and Seeds:gsub("[Kk]", "") * 1000 or Seeds:gsub(",", "")
-            if (not Have and tonumber(SeedHave) > 4000) then
-                StartRolls = true
-                Roll()
-            elseif Have and not CheckBackPack() then
-                ReturnForLobby()
-            end
             if CheckAnotherPlayer() then
                 print('Have another player')
                 game:shutdown()
@@ -755,23 +647,27 @@ local function main()
                 if workspace:GetAttribute("MapId") == "map_farm" then
                     game:shutdown()
                 elseif workspace:GetAttribute("MapId") == "map_back_garden" and CheckBackPack() then
-                    PlayLose2()
-                    setfpscap(15)
-                elseif workspace:GetAttribute("MapId") == "map_back_garden" then
                     PlayLose()
+                    setfpscap(8)
                 elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") then
                     PlayLose()
                 end
             else
-                if workspace:GetAttribute("MapId") == "map_farm" and game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Tomato") and tonumber(Wins.Text) < 25 then
+                if workspace:GetAttribute("MapId") == "map_farm" and CheckBackPack() and tonumber(Wins.Text) < 25 then
                     print('PlayWin')
                     setfpscap(15)
                     PlayWin()
+                elseif tonumber(Seed) < 2000 and not CheckBackPack() then
+                    print('PlayLose')
+                    setfpscap(8)
+                    PlayLose()
+                elseif tonumber(Seed) >= 2000 and not CheckBackPack() then
+                    game:shutdown()
                 elseif tonumber(Wins.Text) >= 25 then
                     game:shutdown()
                 end
             end
-            task.wait()
+            task.wait(0.4)
         end
     end
 end
