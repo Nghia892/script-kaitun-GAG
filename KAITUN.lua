@@ -213,7 +213,7 @@ local function TimeCheck()
             time = currentTime - lastTime -- Tính thời gian trôi qua
         end
         print("Thời gian trôi qua: " .. time .. " giây")
-        wait(1) -- Vẫn giữ wait(1) để tránh CPU overload
+        wait() -- Vẫn giữ wait(1) để tránh CPU overload
     end
 end
 
@@ -291,7 +291,6 @@ local function PlayLose2()
     elseif time > 90 then
         FireLawn()
     end
-    task.wait()
 end
 local function RedeemCode()
     local codes = {"PLAZA", "MYSTERY", "SLIME", "WASTE"}
@@ -782,7 +781,7 @@ local function main()
                     game:shutdown()
                 end
             end
-            task.wait(0.4)
+            task.wait()
         end
     end
 end
