@@ -207,6 +207,12 @@ local function TimeCheck()
     while true do
         if DifficultyVote.Visible then
             time = 0 -- Đặt lại thời gian
+            step1 = false
+            step2 = false
+            step3 = false
+            step4 = false
+            step5 = false
+            step6 = false
             lastTime = os.time() -- Cập nhật thời điểm bắt đầu
         else
             local currentTime = os.time()
@@ -261,14 +267,6 @@ local function PlayLose2()
     end
     if game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.GameEnd.Visible then
         game:GetService("ReplicatedStorage"):WaitForChild("RemoteFunctions"):WaitForChild("RestartGame"):InvokeServer()
-    end
-    if time == 0 then
-        step1 = false
-        step2 = false
-        step3 = false
-        step4 = false
-        step5 = false
-        step6 = false
     end
     if time > 20 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
         FireLawn()
