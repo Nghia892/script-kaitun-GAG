@@ -270,13 +270,13 @@ local function PlayLose2()
         step5 = false
         step6 = false
     end
-    if time > 22 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
+    if time > 20 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step1 then
         FireLawn()
         step1 = true
-    elseif time > 41 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
+    elseif time > 39 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step2 then
         FireLawn()
         step2 = true
-    elseif time > 50 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
+    elseif time > 49 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step3 then
         FireLawn()
         step3 = true
     elseif time > 62 and game:GetService("Players").LocalPlayer:GetAttribute("Cash") > 700 and not step4 then
@@ -661,7 +661,7 @@ local function ClearUnity()
         end
     )
 end
-task.spawn(ClearUnity)
+-- task.spawn(ClearUnity)
 local Wins = game:GetService("Players").LocalPlayer.PlayerGui.GameGui.Screen.Middle.Stats.Items.Frame.ScrollingFrame.GamesWon.Items.Items.Val
 local function main()
     if game.PlaceId == 108533757090220 then
